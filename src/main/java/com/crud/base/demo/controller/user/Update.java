@@ -21,20 +21,5 @@ import java.util.*;
 @RequestMapping("users")
 public class Update {
 
-    @Autowired
-    private CreateUserService createUserService;
-
-    @PostMapping("/address")
-    public ResponseEntity<User> create(@RequestBody @Valid Address address) {
-
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        user.setAddresses((Set<Address>) new HashSet<>(Arrays.asList(address)));
-        try{
-            return ResponseEntity.status(HttpStatus.CREATED).body(createUserService.addAddresses(user));
-        }catch (ResourceNotFoundException err){
-            //TODO: Will must never happen because the user must be authenticated to access this route.
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(user);
-        }
-    }
 
 }

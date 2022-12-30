@@ -8,6 +8,8 @@ import com.crud.base.demo.service.address.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class CreateUserService {
 
@@ -20,16 +22,13 @@ public class CreateUserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User addAddresses(User user) throws ResourceNotFoundException {
+    public Address addAddressById(UUID userId, Address address) throws ResourceNotFoundException {
 
-        User userFound = searchUserService.findById(user.getId());
+        User userFound = searchUserService.findById(userId);
+        Address addressCreated = addressService.create(address);
+        userFound.appendAddress(addressCreated);
+        userRepository.save(userFound);
 
-        for(Address address: user.getAddresses()){
-            address.setAddressKey(user.getId()+address.getAddressKey());
-            Address addressUpdated = addressService.create(address);
-            userFound.appendAddress(addressUpdated);
-        }
-
-        return userRepository.save(userFound);
+        return addressCreated;
     }
 }

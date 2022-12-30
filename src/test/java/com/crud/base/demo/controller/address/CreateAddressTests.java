@@ -11,6 +11,7 @@ import com.crud.base.demo.model.UserExtended;
 import com.crud.base.demo.repository.UserRepository;
 import com.crud.base.demo.service.address.AddressService;
 import com.crud.base.demo.service.user.AuthService;
+import com.crud.base.demo.service.user.CreateUserService;
 import com.crud.base.demo.service.user.DeleteUserService;
 import com.crud.base.demo.service.user.UpdateUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,7 +47,7 @@ public class CreateAddressTests {
     private AddressService addressService;
 
     @Autowired
-    private UpdateUserService updateUserService;
+    private CreateUserService createUserService;
 
     @Autowired
     private DeleteUserService deleteUserService;
@@ -74,21 +75,17 @@ public class CreateAddressTests {
         authUser.put("password", "password");
 
         testerUser.appendAddress(addressAlreadyExists);
-
-        Set<Address> addresses = updateUserService.updateAddresses(testerUser).getAddresses();
-        for(Address a: addresses){
-            addressAlreadyExists.setId(a.getId());
-        }
+        addressAlreadyExists = createUserService.addAddressById(testerUser.getId(), addressAlreadyExists);
 
         addressToCreate = new Address("street1","state1", "country1",1);
     }
 
     @After
     public void afterEach() throws ResourceNotFoundException {
-        deleteUserService.deleteAddressByAddressKey(testerUser.getId(), addressAlreadyExists.getAddressKey());
+        deleteUserService.deleteAddressById(testerUser.getId(), addressAlreadyExists.getId());
 
-        if(addressToCreate.getAddressKey() != null){
-            deleteUserService.deleteAddressByAddressKey(testerUser.getId(), addressToCreate.getAddressKey());
+        if(addressToCreate.getId() != null){
+            deleteUserService.deleteAddressById(testerUser.getId(), addressToCreate.getId());
         }
         userRepository.deleteById(testerUser.getId());
     }
@@ -98,7 +95,7 @@ public class CreateAddressTests {
 
         String bodyContent = TestsUtils.objectToJson(addressToCreate);
 
-        MvcResult result = mockMvc.perform(post("/users/address").contentType(TestsUtils.CONTENT_TYPE)
+        MvcResult result = mockMvc.perform(post("/users/address/").contentType(TestsUtils.CONTENT_TYPE)
                         .content(bodyContent)
                         .header("authorization", "Bearer " + authUser.get("token"))
                 )
@@ -106,10 +103,7 @@ public class CreateAddressTests {
                 .andReturn();
 
         final HashMap<String, Object> responseBody = new ObjectMapper().readValue(result.getResponse().getContentAsString(), HashMap.class);
-
-        Map<String, Object> addressIdStr = (Map<String, Object>) ((List) responseBody.get("addresses")).get(0);
-
-        addressToCreate.setAddressKey((String) addressIdStr.get("key"));
+        addressToCreate.setId(UUID.fromString( (String) responseBody.get("id")));
     }
 
     @Test
@@ -117,7 +111,7 @@ public class CreateAddressTests {
 
         String bodyContent = TestsUtils.objectToJson(addressToCreate);
 
-        mockMvc.perform(post("/users/address").contentType(TestsUtils.CONTENT_TYPE)
+        mockMvc.perform(post("/users/address/").contentType(TestsUtils.CONTENT_TYPE)
                         .content(bodyContent)
                 )
                 .andExpect(status().isUnauthorized())
@@ -129,7 +123,7 @@ public class CreateAddressTests {
 
         String bodyContent = TestsUtils.objectToJson(addressAlreadyExists);
 
-        mockMvc.perform(post("/users/address").contentType(TestsUtils.CONTENT_TYPE)
+        mockMvc.perform(post("/users/address/").contentType(TestsUtils.CONTENT_TYPE)
                         .content(bodyContent)
                 )
                 .andExpect(status().isOk())

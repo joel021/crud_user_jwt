@@ -22,25 +22,6 @@ public class UpdateUserService {
     @Autowired
     private AddressService addressService;
 
-    public User updateAddresses(User user) throws ResourceNotFoundException {
-
-        User userFound = searchUserService.findById(user.getId());
-
-        for (Address address: userFound.getAddresses()){
-            if(user.getAddresses().contains(address)){
-                userFound.removeAddress(address);
-            }
-        }
-
-        for(Address address: user.getAddresses()){
-            address.setAddressKey(user.getId()+address.getAddressKey());
-            Address addressUpdated = addressService.create(address);
-            userFound.appendAddress(addressUpdated);
-        }
-
-        return userRepository.save(userFound);
-    }
-
     public User updateEmailAndPassword(User user) throws ResourceNotFoundException  {
         User userFound = searchUserService.findById(user.getId());
 

@@ -33,13 +33,12 @@ public class DeleteUserService {
         }
     }
 
-    public void deleteAddressByAddressKey(UUID userId, String addressKey) throws ResourceNotFoundException {
+    public void deleteAddressById(UUID userId, UUID addressId) throws ResourceNotFoundException {
         User userFound = searchUserService.findById(userId);
         Address address = new Address();
-        address.setAddressKey(addressKey);
         userFound.removeAddress(address);
 
         userRepository.save(userFound);
-        addressService.deleteByAddressKey(addressKey);
+        addressService.deleteById(addressId);
     }
 }

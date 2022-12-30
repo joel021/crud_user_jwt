@@ -3,11 +3,7 @@ package com.crud.base.demo.model;
 import java.util.Objects;
 import java.util.UUID;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,8 +14,6 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id", updatable=false, unique=true, nullable=false)
     private UUID id;
-    @Column(name="addressKey", updatable = true, unique = true, nullable = false)
-    private String addressKey;
 
     @NotBlank(message = "The street name is required.")
     private String street;
@@ -33,8 +27,11 @@ public class Address {
     @NotNull(message = "The number is required.")
     private int number;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User owner;
+
     public Address(String street, String state, String country, int number){
-        this.addressKey = street+"-"+state+"-"+country+"-"+number;
         this.street = street;
         this.state = state;
         this.country = country;
@@ -55,10 +52,8 @@ public class Address {
             return true;
         }
 
-        return Objects.equals(address.street, this.street)
-                && Objects.equals(address.state, this.state)
-                && Objects.equals(address.country, this.country)
-                && Objects.equals(address.number, this.number);
+        return Objects.equals(this.number+"-"+this.street+"-"+this.state+"-"+this.country,
+                address.number+"-"+address.street+"-"+address.state+"-"+address.country);
     }
 
     public int getNumber() {
@@ -101,11 +96,11 @@ public class Address {
         this.id = id;
     }
 
-    public String getAddressKey() {
-        return addressKey;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setAddressKey(String addressKey) {
-        this.addressKey = addressKey;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
