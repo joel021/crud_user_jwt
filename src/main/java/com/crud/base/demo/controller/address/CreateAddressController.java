@@ -1,5 +1,6 @@
 package com.crud.base.demo.controller.address;
 
+import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
 import com.crud.base.demo.model.Address;
 import com.crud.base.demo.model.User;
@@ -27,10 +28,18 @@ public class CreateAddressController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         try{
-            return ResponseEntity.status(HttpStatus.CREATED).body(addressService.create(user.getId(), address));
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(addressService.create(user.getId(), address));
+        }catch (ResourceAlreadyExists err){
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(err.getMessage());
         }catch (ResourceNotFoundException err){
             //TODO: Will must never happen because the user must be authenticated to access this route.
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The system can't create this address because it can't find the owner user.");
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("The system can't create this address because it can't find the owner user.");
         }
     }
 

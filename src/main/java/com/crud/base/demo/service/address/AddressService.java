@@ -1,5 +1,6 @@
 package com.crud.base.demo.service.address;
 
+import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
 import com.crud.base.demo.model.Address;
 import com.crud.base.demo.model.User;
@@ -23,13 +24,18 @@ public class AddressService {
     @Autowired
     private SearchUserService searchUserService;
 
-    public Address create(UUID userId, Address address) throws ResourceNotFoundException  {
-        Address addressCreated = addressRepository.save(address);
+    public Address create(UUID userId, Address address) throws ResourceNotFoundException, ResourceAlreadyExists {
 
         User userFound = searchUserService.findById(userId);
-        userFound.appendAddress(addressCreated);
 
+        if(userFound.getAddresses().contains(address)){
+            throw new ResourceAlreadyExists("Address already associated with this user.");
+        }
+
+        Address addressCreated = addressRepository.save(address);
+        userFound.appendAddress(addressCreated);
         userRepository.save(userFound);
+
         return addressCreated;
     }
 

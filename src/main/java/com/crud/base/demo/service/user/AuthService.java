@@ -10,7 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.crud.base.demo.exceptions.UserAlreadyExists;
+import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
 import com.crud.base.demo.repository.UserRepository;
@@ -50,12 +50,12 @@ public class AuthService {
         return credentials;
     }
 
-    public User signup(User user) throws UserAlreadyExists {
+    public User signup(User user) throws ResourceAlreadyExists {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         User userFound = searchUser.findByEmail(user.getEmail());
         if (userFound != null) {
-            throw new UserAlreadyExists(null);
+            throw new ResourceAlreadyExists(null);
         }
 
         return userRepository.save(

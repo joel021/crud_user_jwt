@@ -3,7 +3,7 @@ package com.crud.base.demo.controller.address;
 
 import com.crud.base.demo.TestsUtils;
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
-import com.crud.base.demo.exceptions.UserAlreadyExists;
+import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.model.Address;
 import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
@@ -13,7 +13,6 @@ import com.crud.base.demo.service.address.AddressService;
 import com.crud.base.demo.service.user.AuthService;
 import com.crud.base.demo.service.user.CreateUserService;
 import com.crud.base.demo.service.user.DeleteUserService;
-import com.crud.base.demo.service.user.UpdateUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
 import org.junit.After;
@@ -58,13 +57,13 @@ public class CreateAddressTests {
     private Address addressToCreate, addressAlreadyExists;
 
     @Before
-    public void beforeAach() throws ResourceNotFoundException {
+    public void beforeAach() throws ResourceNotFoundException, ResourceAlreadyExists {
         addressAlreadyExists = new Address("street","state", "country",0);
 
         try {
             User testerUser = authService.signup(new User("addressTesterUser@gmail.com", "password", Role.USER));
             this.testerUser = new UserExtended(testerUser);
-        } catch (UserAlreadyExists ignored) {
+        } catch (ResourceAlreadyExists ignored) {
             User testerUser = userRepository.findByEmail("addressTesterUser@gmail.com").get(0);
             this.testerUser = new UserExtended(testerUser);
         }
@@ -82,12 +81,14 @@ public class CreateAddressTests {
 
     @After
     public void afterEach() throws ResourceNotFoundException {
+
         deleteUserService.deleteAddressById(testerUser.getId(), addressAlreadyExists.getId());
 
         if(addressToCreate.getId() != null){
             deleteUserService.deleteAddressById(testerUser.getId(), addressToCreate.getId());
         }
         userRepository.deleteById(testerUser.getId());
+
     }
 
     @Test
@@ -125,8 +126,9 @@ public class CreateAddressTests {
 
         mockMvc.perform(post("/users/address/").contentType(TestsUtils.CONTENT_TYPE)
                         .content(bodyContent)
+                        .header("authorization", "Bearer " + authUser.get("token"))
                 )
-                .andExpect(status().isOk())
+                .andExpect(status().isConflict())
                 .andReturn();
     }
 }

@@ -1,7 +1,7 @@
 package com.crud.base.demo.controller.user;
 
 import com.crud.base.demo.TestsUtils;
-import com.crud.base.demo.exceptions.UserAlreadyExists;
+import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
 import com.crud.base.demo.repository.UserRepository;
@@ -44,7 +44,7 @@ public class SigninTests {
     public void beforeAach() {
         try {
             dreamSigninUser = authService.signup(new User("dreanSigninUser@gmail.com", "password", Role.USER));
-        }catch (UserAlreadyExists ignored){
+        }catch (ResourceAlreadyExists ignored){
             dreamSigninUser = userRepository.findByEmail("dreanSigninUser@gmail.com").get(0);
         }
 
@@ -81,12 +81,10 @@ public class SigninTests {
 
         String bodyContent = TestsUtils.objectToJson(userObject);
 
-        final MvcResult result = mockMvc.perform(post("/users/signin").contentType(TestsUtils.CONTENT_TYPE)
+        mockMvc.perform(post("/users/signin").contentType(TestsUtils.CONTENT_TYPE)
                         .content(bodyContent))
-                .andExpect(status().isOk())
+                .andExpect(status().isUnauthorized())
                 .andReturn();
-
-        assert ("".equals(result.getResponse().getContentAsString()));
     }
 
     public void signinWithoutEmail() throws Exception {

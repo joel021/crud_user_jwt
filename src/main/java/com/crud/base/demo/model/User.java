@@ -13,7 +13,6 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity(name = "user")
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id", updatable=false, unique=true, nullable=false)
@@ -109,6 +108,9 @@ public class User implements UserDetails {
         this.addresses.addAll(addresses);
     }
 
+    public boolean containsAddress(Address address){
+        return this.addresses.contains(address);
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<GrantedAuthority>(Arrays.asList(new Role(this.role)));

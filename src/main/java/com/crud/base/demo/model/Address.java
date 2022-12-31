@@ -42,18 +42,18 @@ public class Address {
     @Override
     public boolean equals(Object arg0) {
 
-        if (arg0 == null){
+        if (!(arg0 instanceof Address)){
             return false;
         }
-        
+
         Address address = (Address) arg0;
-
-        if(Objects.equals(address.id, this.id)){
-            return true;
-        }
-
         return Objects.equals(this.number+"-"+this.street+"-"+this.state+"-"+this.country,
-                address.number+"-"+address.street+"-"+address.state+"-"+address.country);
+                address.getNumber()+"-"+address.getStreet()+"-"+address.getState()+"-"+address.getCountry());
+    }
+
+    @Override
+    public int hashCode(){
+        return 1;
     }
 
     public int getNumber() {

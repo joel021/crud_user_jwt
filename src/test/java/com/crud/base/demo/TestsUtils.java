@@ -1,6 +1,7 @@
 package com.crud.base.demo;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.springframework.http.MediaType;
 
@@ -13,7 +14,7 @@ public class TestsUtils {
     
     public static final MediaType CONTENT_TYPE = new MediaType(MediaType.APPLICATION_JSON.getType(),
                 MediaType.APPLICATION_JSON.getSubtype(),
-                Charset.forName("utf8"));
+            StandardCharsets.UTF_8);
 
     public static String objectToJson(Object object) throws JsonProcessingException{
         

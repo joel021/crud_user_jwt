@@ -5,11 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8796aff4-0953-4cbc-bd10-bb9ca72b4157" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/controller/address/CreateAddressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/controller/address/CreateAddressController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/controller/user/Auth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/controller/user/Auth.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/exceptions/UserAlreadyExists.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/exceptions/ResourceAlreadyExists.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/model/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/model/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/model/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/model/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/repository/AddressRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/repository/AddressRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/security/AuthTokenFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/security/AuthTokenFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/service/address/AddressService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/service/address/AddressService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/service/user/CreateUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/service/user/CreateUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/service/user/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/base/demo/service/user/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/crud/base/demo/TestsUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/crud/base/demo/TestsUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/crud/base/demo/controller/address/CreateAddressTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/crud/base/demo/controller/address/CreateAddressTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/crud/base/demo/controller/user/SigninTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/crud/base/demo/controller/user/SigninTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/classpath.index" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classpath.index" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/classpath.index" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/classpath.index" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,9 +95,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.crud.base.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.crud.base.demo" />
+      <option name="MAIN_CLASS_NAME" value="com.crud.base.demo.TestTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.All in demo" />
+        <item itemvalue="JUnit.TestTests" />
         <item itemvalue="JUnit.MainTests" />
       </list>
     </recent_temporary>

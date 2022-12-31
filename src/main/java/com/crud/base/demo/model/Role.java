@@ -2,6 +2,8 @@ package com.crud.base.demo.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.HashMap;
+
 public class Role implements GrantedAuthority {
 
     public static final String ADMIN = "ADMIN", USER = "USER";
