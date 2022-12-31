@@ -75,7 +75,7 @@ public class CreateAddressTests {
         authUser.put("password", "password");
 
         testerUser.appendAddress(addressAlreadyExists);
-        addressAlreadyExists = createUserService.addAddressById(testerUser.getId(), addressAlreadyExists);
+        addressAlreadyExists = addressService.create(testerUser.getId(), addressAlreadyExists);
 
         addressToCreate = new Address("street1","state1", "country1",1);
     }
@@ -107,7 +107,7 @@ public class CreateAddressTests {
     }
 
     @Test
-    public void createWithouAuth() throws Exception {
+    public void createWithoutAuth() throws Exception {
 
         String bodyContent = TestsUtils.objectToJson(addressToCreate);
 

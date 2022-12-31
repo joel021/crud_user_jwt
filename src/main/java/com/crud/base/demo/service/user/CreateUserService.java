@@ -22,13 +22,4 @@ public class CreateUserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Address addAddressById(UUID userId, Address address) throws ResourceNotFoundException {
-
-        User userFound = searchUserService.findById(userId);
-        Address addressCreated = addressService.create(address);
-        userFound.appendAddress(addressCreated);
-        userRepository.save(userFound);
-
-        return addressCreated;
-    }
 }
