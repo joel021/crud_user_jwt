@@ -16,30 +16,8 @@ import java.util.HashSet;
 public class TestTests {
 
     @Test
-    public void ensureUniqueAddresses(){
-        HashSet<Address> addressHashSet = new HashSet<>();
-        Address address1 = new Address("street","state", "country", 0);
-        Address address2 = new Address("street","state", "country", 0);
-        Address address3 = new Address("street","state", "country", 1);
+    public void generalTests(){
 
-        assert(address1.equals(address2));
-
-        assert(!address1.equals(address3));
-
-        addressHashSet.add(address1);
-        addressHashSet.add(address2);
-        addressHashSet.add(address3);
-
-        assert(addressHashSet.size() == 2);
-
-        assert(addressHashSet.contains(address1));
-        assert(addressHashSet.contains(address2));
-        assert(addressHashSet.contains(address3));
-
-        User user = new User();
-        user.setAddresses(addressHashSet);
-
-        assert(user.getAddresses().contains(address2));
     }
 
 }

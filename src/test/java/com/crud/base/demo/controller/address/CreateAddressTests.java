@@ -58,7 +58,7 @@ public class CreateAddressTests {
 
     @Before
     public void beforeAach() throws ResourceNotFoundException, ResourceAlreadyExists {
-        addressAlreadyExists = new Address("street","state", "country",0);
+        addressAlreadyExists = new Address("country", "state", "city", "street", 0);
 
         try {
             User testerUser = authService.signup(new User("addressTesterUser@gmail.com", "password", Role.USER));
@@ -73,10 +73,9 @@ public class CreateAddressTests {
         authUser = authService.signin(testerUser);
         authUser.put("password", "password");
 
-        testerUser.appendAddress(addressAlreadyExists);
         addressAlreadyExists = addressService.create(testerUser.getId(), addressAlreadyExists);
 
-        addressToCreate = new Address("street1","state1", "country1",1);
+        addressToCreate = new Address("country1", "state1", "city1", "street1", 1);
     }
 
     @After
@@ -121,6 +120,12 @@ public class CreateAddressTests {
 
     @Test
     public void createWhenAlreadyExists() throws Exception {
+        HashMap<String, Object> addressAlreadyExists = new HashMap<>();
+        addressAlreadyExists.put("country", this.addressAlreadyExists.getCountry());
+        addressAlreadyExists.put("state", this.addressAlreadyExists.getState());
+        addressAlreadyExists.put("city", this.addressAlreadyExists.getCity());
+        addressAlreadyExists.put("street", this.addressAlreadyExists.getStreet());
+        addressAlreadyExists.put("number", this.addressAlreadyExists.getNumber());
 
         String bodyContent = TestsUtils.objectToJson(addressAlreadyExists);
 

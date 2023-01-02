@@ -5,7 +5,6 @@ import com.crud.base.demo.exceptions.ResourceNotFoundException;
 import com.crud.base.demo.model.Address;
 import com.crud.base.demo.model.User;
 import com.crud.base.demo.repository.AddressRepository;
-import com.crud.base.demo.repository.UserRepository;
 import com.crud.base.demo.service.user.SearchUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +18,6 @@ public class AddressService {
     private AddressRepository addressRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private SearchUserService searchUserService;
 
     public Address create(UUID userId, Address address) throws ResourceNotFoundException, ResourceAlreadyExists {
@@ -31,12 +27,9 @@ public class AddressService {
         if(userFound.getAddresses().contains(address)){
             throw new ResourceAlreadyExists("Address already associated with this user.");
         }
-
-        Address addressCreated = addressRepository.save(address);
-        userFound.appendAddress(addressCreated);
-        userRepository.save(userFound);
-
-        return addressCreated;
+        userFound.setAddresses(null);
+        address.setOwner(userFound);
+        return addressRepository.save(address);
     }
 
     public void deleteById(UUID id){

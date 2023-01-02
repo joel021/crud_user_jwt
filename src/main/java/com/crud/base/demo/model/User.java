@@ -2,6 +2,7 @@ package com.crud.base.demo.model;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -27,7 +28,8 @@ public class User implements UserDetails {
     private String password;
 
     private String role;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "owner")
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "owner")
     private Set<Address> addresses;
 
     public User(){

@@ -24,18 +24,22 @@ public class Address {
     @NotBlank(message = "The country name is required.")
     private String country;
 
+    @NotBlank(message = "The city name is required.")
+    private String city;
+
     @NotNull(message = "The number is required.")
     private int number;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User owner;
 
-    public Address(String street, String state, String country, int number){
+    public Address(String country, String state, String city, String street, int number){
         this.street = street;
         this.state = state;
         this.country = country;
         this.number = number;
+        this.city = city;
     }
     public Address (){}
 
@@ -47,8 +51,8 @@ public class Address {
         }
 
         Address address = (Address) arg0;
-        return Objects.equals(this.number+"-"+this.street+"-"+this.state+"-"+this.country,
-                address.getNumber()+"-"+address.getStreet()+"-"+address.getState()+"-"+address.getCountry());
+        return Objects.equals(this.number+"-"+this.street+"-"+this.city+"-"+this.state+"-"+this.country,
+                address.getNumber()+"-"+address.getStreet()+"-"+address.getCity()+"-"+address.getState()+"-"+address.getCountry());
     }
 
     @Override
@@ -98,6 +102,14 @@ public class Address {
 
     public User getOwner() {
         return owner;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public void setOwner(User owner) {
