@@ -6,6 +6,8 @@ import { catchError } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/_service/authentication.service';
 import { PageActionsComponent } from 'src/app/_components/page-actions/page-actions.component';
 import { throwError } from 'rxjs';
+import { User } from 'src/app/_model/user';
+import { HTTP_STATUS_UNAUTHORIZED } from 'src/app/_constants/http.constants';
 
 @Component({
   selector: 'app-signin',
@@ -54,26 +56,32 @@ export class Signin extends PageActionsComponent implements OnInit {
 
     this.loading = true;
     this.authenticationService.signin(this.controls.username.value, this.controls.password.value)
-      .pipe(catchError(error => {
-        console.log("Error::!");
-        console.log(error);
-        this.error = error;
+      .pipe(catchError(respError => {
+        
+        if(respError.status == HTTP_STATUS_UNAUTHORIZED){
+          this.error = "Your credentials is not correct";
+        }else{
+          this.error = respError.message;
+        }
+        
         this.loading = false;
-        return throwError(() => error);
+        return throwError(() => respError.message);
       }))
-      .subscribe(
-        data => {
-          console.log("No error");
+      .subscribe(data => {
           this.loading = false;
           if (data.token != null) {
-            const loggedUser = data.data.user;
-            loggedUser.token = data.data.token;
-            this.authenticationService.saveUserInSession(loggedUser);
-            this.router.navigate([this.returnUrl]);
+            const user = new User();
+            user.email = data.email;
+            user.token = data.token;
+            user.authorities = [data.role];
+            user._id = data.id;
+            this.authenticationService.saveUserInSession(user);
+            this.router.navigate(['/home'])
           } else {
             this.error = data.message;
           }
-        }
+        },
+        
       );
   }
 

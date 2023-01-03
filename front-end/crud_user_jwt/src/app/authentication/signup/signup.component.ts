@@ -10,6 +10,7 @@ import { throwError } from 'rxjs';
 import { AuthenticationService } from 'src/app/_service/authentication.service';
 import { PageActionsComponent } from 'src/app/_components/page-actions/page-actions.component';
 import { CustomValidators } from 'src/app/_helpers/validators';
+import { User } from 'src/app/_model/user';
 
 @Component({
   selector: 'sinup-component',
@@ -65,18 +66,27 @@ export class Signup extends PageActionsComponent implements OnInit {
       passwordConfirmation: this.controls.passwordConfirmation.value
     };
     this.authenticationService.signup(user)
-      .pipe(catchError(error => {
-        console.log("Error::");
-        console.log(error);
-        this.toastr.error(error, 'Erro');
-        return throwError(() => error);
+      .pipe(catchError(errorResp => {
+
+        if (errorResp.errors){
+          for(var i = 0; i < errorResp.errors.length; i++){
+            this.toastr.error(errorResp.errors[i], 'Error');
+          }
+        }
+        
+        return throwError(() => errorResp.errors);
       }))
       .subscribe(
         data => {
-          console.log("Suuuuuuuccessss");
-          console.log(data);
           this.loading = false;
-          this.router.navigate(['/']).then(
+          const user = new User();
+          user.email = data.email;
+          user.token = data.token;
+          user.authorities = [data.role];
+          user._id = data.id;
+          this.authenticationService.saveUserInSession(user);
+
+          this.router.navigate(['/home']).then(
             () => {
               this.toastr.success('Your account was created successfully!', 'Success');
             }
