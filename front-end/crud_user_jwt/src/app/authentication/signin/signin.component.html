@@ -4,64 +4,62 @@
 <!-- ============================================================== -->
 <!-- Login box.scss -->
 <!-- ============================================================== -->
-<div class="auth-wrapper d-flex flex-column no-block justify-content-center align-items-center bg-dark">
-  <div class="auth-box bg-dark border-top border-secondary">
-      <div id="loginform">
-          <div class="text-center p-t-20 p-b-20">
-              <span class="db"><img src="assets/images/logo.png" alt="logo" /></span>
-          </div>
-          <!-- Form -->
-          <form class="form-horizontal m-t-20" [formGroup]="loginForm" id="form-login">
-              <div class="row p-b-0">
-                  <div class="col-12">
-                    <!-- e-mail-->
-                      <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text bg-success text-white" id="basic-addon1"><i
-                                      class="ti-user"></i></span>
-                          </div>
-                          <input type="text" formControlName="username"
-                              [ngClass]="{ 'is-invalid': submitted && controls.username.errors }"
-                              class="form-control form-control-lg" placeholder="E-mail"
-                              aria-label="E-mail" aria-describedby="basic-addon1" required="" id="emailInput">
-                          <div *ngIf="submitted && controls.username.errors" class="invalid-feedback">
-                              <div *ngIf="controls.username.errors.required">Provide your e-mail.</div>
-                          </div>
-                      </div>
-                      <!-- password -->
-                      <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text bg-warning text-white" id="basic-addon2"><i
-                                      class="ti-pencil"></i></span>
-                          </div>
-                          <input type="password" formControlName="password"
-                              [ngClass]="{ 'is-invalid': submitted && controls.password.errors }"
-                              class="form-control form-control-lg" placeholder="Password" aria-label="Password"
-                              aria-describedby="basic-addon1" required="" id="passInput" autocomplete="false">
-                          <div *ngIf="submitted && controls.password.errors" class="invalid-feedback">
-                              <div *ngIf="controls.password.errors.required">Provide your password.</div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div *ngIf="error" class="alert alert-danger mt-0 mb-3">{{error}}</div>
-              <div class="row border-top border-secondary m-t-30">
-                  <div class="col-12">
-                      <div class="form-group">
-                          <div class="p-t-20">
-                              <button [disabled]="loading" class="btn btn-info" id="to-recover" type="button"
-                                  (click)="recoverPassword()"><i class="fa fa-lock m-r-5"></i>Recover password.</button>
-                              <button [disabled]="loading" type="submit" form="form-login" class="btn btn-success float-right"
-                                  type="submit" (click)="onSubmit()">{{ loading ? 'Loading...' : 'Submit' }}</button>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-12 flex-column register">
-                      <button type="button" class="btn btn-lg btn-block btn-outline-warning"
-                          (click)="registerUser()" id="buttonCreateAccount">Signup</button>
-                  </div>
-              </div>
-          </form>
+<div class="auth-wrapper d-flex flex-column no-block justify-content-center align-items-center bg-light">
+  <div class="auth-box bg-light border-top border-secondary">
+        <div id="loginform">
+        
+            <div class="text-center p-t-20 p-b-20">
+                <h1>Login</h1>
+            </div>
+            <!-- Form -->
+            <div class="card" style="padding:3em;">
+                <form class="form-horizontal m-t-20" [formGroup]="loginForm" id="form-login">
+                <div class="row p-b-0">
+                    <div class="col-12">
+                        <!-- e-mail-->
+                        <div class="input-group mb-3">
+                            
+                            <input type="text" formControlName="username"
+                                [ngClass]="{ 'is-invalid': submitted && controls.username.errors }"
+                                class="form-control form-control-lg" placeholder="E-mail"
+                                aria-label="E-mail" aria-describedby="basic-addon1" required="" id="emailInput" />
+                            
+                            <div *ngIf="submitted && controls.username.errors" class="invalid-feedback">
+                                <div *ngIf="controls.username.errors.required">Provide your e-mail.</div>
+                            </div>
+                        </div>
+                        <!-- password -->
+                        <div class="input-group mb-3">
+                            
+                            <input type="password" formControlName="password"
+                                [ngClass]="{ 'is-invalid': submitted && controls.password.errors }"
+                                class="form-control form-control-lg" placeholder="Password" aria-label="Password"
+                                aria-describedby="basic-addon1" required="" id="passInput" autocomplete="false">
+                            <div *ngIf="submitted && controls.password.errors" class="invalid-feedback">
+                                <div *ngIf="controls.password.errors.required">Provide your password.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="error" class="alert alert-danger mt-0 mb-3">{{error}}</div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <div class="p-t-20">
+
+                            <button [disabled]="loading" class="btn btn-light" id="to-recover" type="button"
+                                (click)="recoverPassword()"><i class="fa fa-lock m-r-5"></i>Recover password</button>
+                            <button [disabled]="loading" type="submit" form="form-login" class="btn btn-light"
+                                type="submit" (click)="onSubmit()">{{ loading ? 'Loading...' : 'Submit' }}</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 flex-column register">
+                    <button type="button" class="btn btn-primary"
+                        (click)="signupUser()" >Signup</button>
+                </div>
+
+                </form>
+            </div>
       </div>
   </div>
 </div>

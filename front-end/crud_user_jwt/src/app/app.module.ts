@@ -15,6 +15,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 registerLocaleData(localePt);
 
@@ -33,6 +34,7 @@ registerLocaleData(localePt);
     AuthenticationModule,
     ToastrModule.forRoot(),
     NgxMaskModule.forRoot(),
+    NgbModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },

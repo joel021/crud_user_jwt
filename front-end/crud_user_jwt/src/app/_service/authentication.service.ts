@@ -27,7 +27,7 @@ export class AuthenticationService {
   }
 
   signin(username: string, password: string): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/users/signin`, { username, password });
+    return this.http.post<any>(`${environment.apiUrl}/users/signin`, { email:username, password });
   }
 
   refreshToken(): Observable<any> {

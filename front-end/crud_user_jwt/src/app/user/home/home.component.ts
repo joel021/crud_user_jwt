@@ -78,7 +78,7 @@ export class Signin extends PageActionsComponent implements OnInit {
     this.router.navigate(['/recover-password']);
   }
 
-  signupUser() {
+  registerUser() {
     this.router.navigate(['/signup']);
   }
 
