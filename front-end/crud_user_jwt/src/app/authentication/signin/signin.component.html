@@ -42,23 +42,23 @@
                     </div>
                 </div>
                 <div *ngIf="error" class="alert alert-danger mt-0 mb-3">{{error}}</div>
-                <div class="col-12">
-                    <div class="form-group">
-                        <div class="p-t-20">
-
-                            <button [disabled]="loading" class="btn btn-light" id="to-recover" type="button"
-                                (click)="recoverPassword()"><i class="fa fa-lock m-r-5"></i>Recover password</button>
-                            <button [disabled]="loading" type="submit" form="form-login" class="btn btn-light"
-                                type="submit" (click)="onSubmit()">{{ loading ? 'Loading...' : 'Submit' }}</button>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="col-12 flex-column register">
-                    <button type="button" class="btn btn-primary"
-                        (click)="signupUser()" >Signup</button>
+                    <button type="button" type="submit" class="btn btn-primary" 
+                    (click)="onSubmit()">{{ loading ? 'Loading...' : 'Submit' }}</button>
                 </div>
 
                 </form>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <div class="p-t-20">
+                        <button [disabled]="loading" class="btn btn-light" id="to-recover" type="button"
+                            (click)="recoverPassword()"><i class="fa fa-lock m-r-5"></i>Recover password</button>
+                        <button [disabled]="loading" form="form-login" class="btn btn-light" 
+                        (click)="signupUser()">Signup</button>
+                    </div>
+                </div>
             </div>
       </div>
   </div>

@@ -15,12 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.crud.base.demo.model.Role;
 import com.crud.base.demo.service.user.AuthDetailsHundlerService;
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
-public class SecurityConfig {
+public class SecurityConfig  {
     
     @Autowired
     private AuthDetailsHundlerService userService;
@@ -71,7 +70,6 @@ public class SecurityConfig {
         http.authenticationProvider(authenticationProvider());
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-        
         return http.build();
     }
 }

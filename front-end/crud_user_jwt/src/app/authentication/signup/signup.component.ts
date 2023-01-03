@@ -62,14 +62,19 @@ export class Signup extends PageActionsComponent implements OnInit {
     const user = {
       email: this.controls.email.value,
       password: this.controls.password.value,
+      passwordConfirmation: this.controls.passwordConfirmation.value
     };
     this.authenticationService.signup(user)
       .pipe(catchError(error => {
+        console.log("Error::");
+        console.log(error);
         this.toastr.error(error, 'Erro');
         return throwError(() => error);
       }))
       .subscribe(
         data => {
+          console.log("Suuuuuuuccessss");
+          console.log(data);
           this.loading = false;
           this.router.navigate(['/']).then(
             () => {

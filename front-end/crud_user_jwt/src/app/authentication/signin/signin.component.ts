@@ -55,12 +55,15 @@ export class Signin extends PageActionsComponent implements OnInit {
     this.loading = true;
     this.authenticationService.signin(this.controls.username.value, this.controls.password.value)
       .pipe(catchError(error => {
+        console.log("Error::!");
+        console.log(error);
         this.error = error;
         this.loading = false;
         return throwError(() => error);
       }))
       .subscribe(
         data => {
+          console.log("No error");
           this.loading = false;
           if (data.token != null) {
             const loggedUser = data.data.user;
