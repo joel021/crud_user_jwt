@@ -80,7 +80,7 @@ public class UpdateAddressTests {
         String bodyContent = TestsUtils.objectToJson(addressAlreadyExists);
 
         MvcResult result = mockMvc.perform(
-                put("/users/address/")
+                put("/users/address/"+addressAlreadyExists.getId().toString())
                         .contentType(TestsUtils.CONTENT_TYPE)
                         .content(bodyContent)
                         .header("authorization", "Bearer " + userAuth.get("token"))

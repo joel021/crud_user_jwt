@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,8 +24,8 @@ public class UpdateAddressController {
     @Autowired
     private AddressService addressService;
 
-    @PutMapping("/")
-    public ResponseEntity<?> putAddress(@RequestBody Map<String, Object> address){
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> putAddress(@RequestBody Map<String, Object> address, @PathVariable String id){
         Address putAddress = Address.parseAddress(address);
         Address addressFound;
         HashMap<String, Object> respBody = new HashMap();

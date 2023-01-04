@@ -54,10 +54,6 @@ export class UserHome implements OnInit {
     this.authenticationService.logout();
   }
 
-  editAddressById(id:string){
-    console.log("edit"+id);
-  }
-
   addAddress(){
     this.router.navigate(['/users/address'])
   }

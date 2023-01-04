@@ -10,8 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'create-address',
-  templateUrl: './create.address.component.html',
-  styleUrls: ['./create.address.component.css']
+  templateUrl: './address.component.html',
+  styleUrls: ['./address.component.css']
 })
 export class CreateAddress extends PageActionsComponent implements OnInit {
 
@@ -37,6 +37,8 @@ export class CreateAddress extends PageActionsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.addressId = this.route.snapshot.params['id'];
+
     this.addressForm = this.formBuilder.group({
       street: ['', Validators.required],
       district: ['', Validators.required],
@@ -45,12 +47,16 @@ export class CreateAddress extends PageActionsComponent implements OnInit {
       city: ['', Validators.required],
       number: ['', Validators.required]
     });
+
+    if (this.addressId != null){
+      this.fetchAddressById(this.addressId)
+    }
+    
   }
 
   get controls() { return this.addressForm.controls; }
 
   onSubmit() {
-    this.addressId = this.route.snapshot.params['id'];
 
     this.submitted = true;
 
@@ -64,7 +70,8 @@ export class CreateAddress extends PageActionsComponent implements OnInit {
       district: this.controls.district.value,
       city: this.controls.city.value,
       state: this.controls.state.value,
-      country: this.controls.country.value
+      country: this.controls.country.value,
+      id: this.addressId
     }
 
     this.loading = true;
@@ -80,6 +87,7 @@ export class CreateAddress extends PageActionsComponent implements OnInit {
       address
     ).subscribe({
       next: respObject => {
+        
         this.loading = false;
         
         this.router.navigate(['/home']).then(
@@ -87,9 +95,13 @@ export class CreateAddress extends PageActionsComponent implements OnInit {
             this.toastr.success('Your address was updated successfully!', 'Success');
           }
         );
+        
       },
       error: respError => {
+        
+        
         this.handleError(respError);
+        
       }
     })
   }
@@ -137,6 +149,24 @@ export class CreateAddress extends PageActionsComponent implements OnInit {
       );
 
     }
+  }
+
+  fetchAddressById(id:string){
+    this.addressService.getAddressById(id).subscribe({
+      next: address => {
+        this.addressForm.setValue({
+          number: address.number,
+          street: address.street,
+          district: address.district,
+          city: address.city,
+          state: address.state,
+          country: address.country
+        })
+      },
+      error: errorObject => {
+        this.toastr.error('Was not passible to retrieve the information about this address.', 'Error');
+      }
+    })
   }
 
 }

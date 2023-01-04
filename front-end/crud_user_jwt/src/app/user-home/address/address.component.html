@@ -3,16 +3,16 @@
         <div class="col-12">
         
             <div class="text-center p-t-20 p-b-20">
-                <h1>Create address</h1>
+                <h1>Address</h1>
             </div>
 
             <!-- Form -->
-            <div class="card" style="padding:3em;">
+            <div class="card" style="padding:1.5em;">
                 <form class="form-horizontal m-t-20" [formGroup]="addressForm">
                 <div class="row p-b-0">
-                    <div class="card">
+                    <div class="card" style="margin-top:1.5em;">
                         <!-- country -->
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3" style="margin-top:1.5em;">
                             
                             <input type="text" formControlName="country"
                                 [ngClass]="{ 'is-invalid': submitted && controls.country.errors }"

@@ -46,11 +46,9 @@
                                                         itemsPerPage: pageSize,
                                                         currentPage: page,
                                                         totalItems: user.addresses.length }">
-                        {{ address.street }} {{ address.number }}, {{ address.city }}, {{ address.country }}
-                        <button (click)="editAddressById('{{address.id}}')" type="button" class="btn btn-link">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Edit</strong></span>
-                        </button>
+                        {{ address.street }} {{ address.number }}, {{ address.district }}, {{ address.city }}, {{ address.state }}, {{ address.country }}
+                        <a routerLink="/users/address/{{address.id}}" class="btn btn-link"><strong>Edit</strong></a>
+                        
                     </li>
                     <pagination-controls (pageChange)="handlePageChange($event)"></pagination-controls>
                 </ul>

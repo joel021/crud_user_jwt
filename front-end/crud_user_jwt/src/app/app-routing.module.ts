@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Signin } from './authentication/signin/signin.component';
 import { Signup } from './authentication/signup/signup.component'
-import { CreateAddress } from './user-home/address/create.address.component';
+import { CreateAddress } from './user-home/address/address.component';
 import { UserHome } from './user-home/home/home.component';
 
 const routes: Routes = [
@@ -20,6 +20,10 @@ const routes: Routes = [
   },
   {
     path: "users/address",
+    component: CreateAddress
+  },
+  {
+    path: "users/address/:id",
     component: CreateAddress
   },
   {

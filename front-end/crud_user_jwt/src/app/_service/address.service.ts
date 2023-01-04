@@ -18,7 +18,7 @@ export class AddressService extends FetchGenericService {
   }
 
   getAddressById(addressId: any): Observable<any> {
-    return super.readById(`${this.resourcePath}/by_id`, addressId);
+    return super.readById(`${this.resourcePath}`, addressId);
   }
 
   put(address: any): Observable<any> {
