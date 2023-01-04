@@ -21,8 +21,8 @@ export class AddressService extends FetchGenericService {
     return super.readById(`${this.resourcePath}/by_id`, addressId);
   }
 
-  update(address: any): Observable<any> {
-    return super.update(this.resourcePath, address);
+  put(address: any): Observable<any> {
+    return super.put(this.resourcePath, address);
   }
 
   deleteById(addressId: any): Observable<any> {

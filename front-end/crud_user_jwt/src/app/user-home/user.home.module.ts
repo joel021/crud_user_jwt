@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UserHome } from './home/home.component';
-import { CreateAddress } from './create-address/create.address.component';
+import { CreateAddress } from './address/create.address.component';
 
 @NgModule({
   declarations: [

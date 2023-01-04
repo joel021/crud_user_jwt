@@ -20,12 +20,14 @@ export class CreateAddress extends PageActionsComponent implements OnInit {
   submitted = false;
   error = '';
   user = null;
+  addressId = null;
 
   constructor(
     @Inject(DOCUMENT) public document,
     public elementRef: ElementRef,
     private formBuilder: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
     private addressService: AddressService,
     private toastr: ToastrService
@@ -48,22 +50,53 @@ export class CreateAddress extends PageActionsComponent implements OnInit {
   get controls() { return this.addressForm.controls; }
 
   onSubmit() {
+    this.addressId = this.route.snapshot.params['id'];
+
     this.submitted = true;
 
     if (this.addressForm.invalid) {
       return;
     }
 
+    var address = {
+      number: this.controls.number.value,
+      street: this.controls.street.value,
+      district: this.controls.district.value,
+      city: this.controls.city.value,
+      state: this.controls.state.value,
+      country: this.controls.country.value
+    }
+
     this.loading = true;
-    this.addressService.createAddress(
-      {
-        number: this.controls.number.value,
-        street: this.controls.street.value,
-        district: this.controls.district.value,
-        city: this.controls.city.value,
-        state: this.controls.state.value,
-        country: this.controls.country.value
-      }).subscribe({
+    if (this.addressId == null){
+      this.createAddress(address);
+    }else{
+      this.putAddress(address);
+    }
+  }
+
+  putAddress(address:any){
+    this.addressService.put(
+      address
+    ).subscribe({
+      next: respObject => {
+        this.loading = false;
+        
+        this.router.navigate(['/home']).then(
+          () => {
+            this.toastr.success('Your address was updated successfully!', 'Success');
+          }
+        );
+      },
+      error: respError => {
+        this.handleError(respError);
+      }
+    })
+  }
+
+  createAddress(address:any){
+    this.addressService.createAddress(address)
+    .subscribe({
         next: respObject => {
           this.loading = false;
           
@@ -75,31 +108,35 @@ export class CreateAddress extends PageActionsComponent implements OnInit {
           
         },
         error: errorObject => {
-          console.log("Errorrrr:")
-          console.log(errorObject)
-          
-          if (errorObject.errors != null){
-            
-            this.router.navigate(['/home']).then( 
-              () => {
-                for(var i = 0; i < errorObject.errors.length; i++){
-                  this.toastr.error(errorObject.errors[i], 'Error');
-                }
-              }
-            );
-          } else if(errorObject.message != null){
-            this.router.navigate(['/home']).then( 
-              () => { this.toastr.error(errorObject.message, 'Error');}
-            );
-          }else{
-            this.router.navigate(['/home']).then( 
-              () => { this.toastr.error('Unfortunately your request was not performed correctly.', 'Error'); }
-            );
-          }
-          
+          this.handleError(errorObject);
         }
       })
   }
 
+  handleError(errorObject: any){
+    if (errorObject.errors != null){
+            
+      this.router.navigate(['/home']).then( 
+        () => {
+          for(var i = 0; i < errorObject.errors.length; i++){
+            this.toastr.error(errorObject.errors[i], 'Error');
+          }
+        }
+      );
+
+    } else if(errorObject.message != null){
+
+      this.router.navigate(['/home']).then( 
+        () => { this.toastr.error(errorObject.message, 'Error');}
+      );
+
+    }else{
+
+      this.router.navigate(['/home']).then( 
+        () => { this.toastr.error('Unfortunately your request was not performed correctly.', 'Error'); }
+      );
+
+    }
+  }
 
 }

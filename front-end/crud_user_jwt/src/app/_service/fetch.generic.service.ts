@@ -10,8 +10,12 @@ export class FetchGenericService {
     return this.http.post<any>(`${environment.apiUrl}/${resource}`, object);
   }
 
-  update(resource: string, object: any): Observable<any> {
+  put(resource: string, object: any): Observable<any> {
     return this.http.put<any>(`${environment.apiUrl}/${resource}/${object._id}`, object);
+  }
+
+  update(resource: string, object: any): Observable<any> {
+    return this.http.patch<any>(`${environment.apiUrl}/${resource}/${object._id}`, object);
   }
 
   updateWithoutId(resource: string, object: any): Observable<any> {

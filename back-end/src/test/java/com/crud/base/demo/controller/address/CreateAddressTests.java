@@ -84,10 +84,10 @@ public class CreateAddressTests {
     @After
     public void afterEach() throws ResourceNotFoundException {
 
-        deleteUserService.deleteAddressById(testerUser.getId(), addressAlreadyExists.getId());
+        addressService.deleteAddressById(testerUser.getId(), addressAlreadyExists.getId());
 
         if(addressToCreate.getId() != null){
-            deleteUserService.deleteAddressById(testerUser.getId(), addressToCreate.getId());
+            addressService.deleteAddressById(testerUser.getId(), addressToCreate.getId());
         }
         userRepository.deleteById(testerUser.getId());
 

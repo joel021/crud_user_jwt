@@ -1,10 +1,12 @@
 package com.crud.base.demo.model;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -131,5 +133,17 @@ public class Address {
 
     public String getDistrict(){
         return this.district;
+    }
+
+    public static Address parseAddress(Map<String, Object> addressMap){
+
+        String id = (String) addressMap.get("id");
+
+        if (id != null){
+            addressMap.put("id", UUID.fromString(id));
+        }
+
+        final ObjectMapper mapper = new ObjectMapper();
+        return mapper.convertValue(addressMap, Address.class);
     }
 }

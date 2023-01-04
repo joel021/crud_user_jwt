@@ -47,10 +47,10 @@
                                                         currentPage: page,
                                                         totalItems: user.addresses.length }">
                         {{ address.street }} {{ address.number }}, {{ address.city }}, {{ address.country }}
-                        <a (click)="editAddressById('{{address.id}}')" href="#" class="btn btn-link">
+                        <button (click)="editAddressById('{{address.id}}')" type="button" class="btn btn-link">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Edit</strong></span>            
-                        </a>
+                            <span><strong>Edit</strong></span>
+                        </button>
                     </li>
                     <pagination-controls (pageChange)="handlePageChange($event)"></pagination-controls>
                 </ul>
