@@ -2,6 +2,8 @@ package com.crud.base.demo.model;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotBlank;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @Entity(name = "user")
 public class User implements UserDetails {
     @Id

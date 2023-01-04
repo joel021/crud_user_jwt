@@ -59,10 +59,10 @@ public class SecurityConfig  {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests(
                     authRequest -> authRequest
-                    .requestMatchers("/users/signup", "/users/signin")
+                    .requestMatchers("/users/delete/*")
+                    .hasAuthority(Authority.WRITE_ALL)
+                    .requestMatchers("/users/signup", "/users/signin", "/users/address")
                     .permitAll()
-                    .requestMatchers("/users/delete")
-                            .hasAuthority(Authority.WRITE_ALL)
                     .anyRequest()
                     .authenticated()
                 );

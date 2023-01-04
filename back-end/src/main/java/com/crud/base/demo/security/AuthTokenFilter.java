@@ -1,6 +1,7 @@
 package com.crud.base.demo.security;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import com.crud.base.demo.service.user.SearchUserService;
 import org.slf4j.Logger;
@@ -34,16 +35,22 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     try {
       String jwt = parseJwt(request);
       if (jwt != null && jwtHundler.validateJwtToken(jwt)) {
-        final String username = jwtHundler.getUserNameFromJwtToken(jwt);
+        final String userId = jwtHundler.getUserIdFromJwtToken(jwt);
+        final UserDetails userDetails = searchUser.findById(UUID.fromString(userId));
 
-        final UserDetails userDetails = searchUser.findByEmail(username);
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-            userDetails,
-            null,
-            userDetails.getAuthorities());
-        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        if (userDetails == null){
+          response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+          response.sendError(HttpServletResponse.SC_FORBIDDEN, "Error when checking authentication.");
+        }else{
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+          UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                  userDetails,
+                  null,
+                  userDetails.getAuthorities());
+          authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+          SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
       }else{
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       }

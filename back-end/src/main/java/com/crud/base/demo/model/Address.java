@@ -3,10 +3,15 @@ package com.crud.base.demo.model;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @Entity(name = "address")
 public class Address {
 
@@ -17,6 +22,9 @@ public class Address {
 
     @NotBlank(message = "The street name is required.")
     private String street;
+
+    @NotBlank(message = "The district must be filled.")
+    private String district;
 
     @NotBlank(message = "The state name is required.")
     private String state;
@@ -34,12 +42,13 @@ public class Address {
     @JoinColumn(name = "user_id")
     private User owner;
 
-    public Address(String country, String state, String city, String street, int number){
+    public Address(String country, String state, String city, String district, String street, int number){
         this.street = street;
         this.state = state;
         this.country = country;
         this.number = number;
         this.city = city;
+        this.district = district;
     }
     public Address (){}
 
@@ -114,5 +123,13 @@ public class Address {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public void setDistrict(String district){
+        this.district = district;
+    }
+
+    public String getDistrict(){
+        return this.district;
     }
 }

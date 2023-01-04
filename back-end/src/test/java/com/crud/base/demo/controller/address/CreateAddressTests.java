@@ -38,10 +38,13 @@ public class CreateAddressTests {
 
     @Inject
     private MockMvc mockMvc;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private AuthService authService;
+    
     @Autowired
     private AddressService addressService;
 
@@ -58,7 +61,7 @@ public class CreateAddressTests {
 
     @Before
     public void beforeAach() throws ResourceNotFoundException, ResourceAlreadyExists {
-        addressAlreadyExists = new Address("country", "state", "city", "street", 0);
+        addressAlreadyExists = new Address("country", "state", "city", "district", "street", 0);
 
         try {
             User testerUser = authService.signup(new User("addressTesterUser@gmail.com", "password", Role.USER));
@@ -75,7 +78,7 @@ public class CreateAddressTests {
 
         addressAlreadyExists = addressService.create(testerUser.getId(), addressAlreadyExists);
 
-        addressToCreate = new Address("country1", "state1", "city1", "street1", 1);
+        addressToCreate = new Address("country1", "state1", "city1", "district1", "street1", 1);
     }
 
     @After
@@ -126,6 +129,7 @@ public class CreateAddressTests {
         addressAlreadyExists.put("city", this.addressAlreadyExists.getCity());
         addressAlreadyExists.put("street", this.addressAlreadyExists.getStreet());
         addressAlreadyExists.put("number", this.addressAlreadyExists.getNumber());
+        addressAlreadyExists.put("district", this.addressAlreadyExists.getDistrict());
 
         String bodyContent = TestsUtils.objectToJson(addressAlreadyExists);
 

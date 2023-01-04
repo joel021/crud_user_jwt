@@ -6,7 +6,6 @@ import { ToastrService } from 'ngx-toastr';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
-
 import { AuthenticationService } from 'src/app/_service/authentication.service';
 import { PageActionsComponent } from 'src/app/_components/page-actions/page-actions.component';
 import { CustomValidators } from 'src/app/_helpers/validators';

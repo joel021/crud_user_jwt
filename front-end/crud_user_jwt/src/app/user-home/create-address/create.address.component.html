@@ -1,0 +1,105 @@
+<div class="container">
+  <div class="row">
+        <div class="col-12">
+        
+            <div class="text-center p-t-20 p-b-20">
+                <h1>Create address</h1>
+            </div>
+
+            <!-- Form -->
+            <div class="card" style="padding:3em;">
+                <form class="form-horizontal m-t-20" [formGroup]="addressForm">
+                <div class="row p-b-0">
+                    <div class="card">
+                        <!-- country -->
+                        <div class="input-group mb-3">
+                            
+                            <input type="text" formControlName="country"
+                                [ngClass]="{ 'is-invalid': submitted && controls.country.errors }"
+                                class="form-control form-control-lg" placeholder="Country"
+                                aria-label="Country" aria-describedby="basic-addon1" required="" />
+                            
+                            <div *ngIf="submitted && controls.country.errors" class="invalid-feedback">
+                                <div *ngIf="controls.country.errors.required">Fill country field.</div>
+                            </div>
+                        </div>
+                        
+                        <!-- state -->
+                        <div class="input-group mb-3">
+                            
+                            <input type="text" formControlName="state"
+                                [ngClass]="{ 'is-invalid': submitted && controls.state.errors }"
+                                class="form-control form-control-lg" placeholder="State"
+                                aria-label="State" aria-describedby="basic-addon1" required="" />
+                            
+                            <div *ngIf="submitted && controls.state.errors" class="invalid-feedback">
+                                <div *ngIf="controls.state.errors.required">Fill state field.</div>
+                            </div>
+                        </div>
+
+                        <!-- city -->
+                        <div class="input-group mb-3">
+                            
+                            <input type="text" formControlName="city"
+                                [ngClass]="{ 'is-invalid': submitted && controls.city.errors }"
+                                class="form-control form-control-lg" placeholder="City"
+                                aria-label="City" aria-describedby="basic-addon1" required="" />
+                            
+                            <div *ngIf="submitted && controls.city.errors" class="invalid-feedback">
+                                <div *ngIf="controls.city.errors.required">Fill city field.</div>
+                            </div>
+                        </div>
+
+                        <!-- district -->
+                        <div class="input-group mb-3">
+                            
+                            <input type="text" formControlName="district"
+                                [ngClass]="{ 'is-invalid': submitted && controls.district.errors }"
+                                class="form-control form-control-lg" placeholder="District"
+                                aria-label="District" aria-describedby="basic-addon1" required="" />
+                            
+                            <div *ngIf="submitted && controls.district.errors" class="invalid-feedback">
+                                <div *ngIf="controls.district.errors.required">Fill district field.</div>
+                            </div>
+                        </div>
+
+                        <!-- street -->
+                        <div class="input-group mb-3">
+                            
+                            <input type="text" formControlName="street"
+                                [ngClass]="{ 'is-invalid': submitted && controls.street.errors }"
+                                class="form-control form-control-lg" placeholder="Street"
+                                aria-label="Street" aria-describedby="basic-addon1" required="" />
+                            
+                            <div *ngIf="submitted && controls.street.errors" class="invalid-feedback">
+                                <div *ngIf="controls.street.errors.required">Fill Street field.</div>
+                            </div>
+                        </div>
+
+                        <!-- number -->
+                        <div class="input-group mb-3">
+                            
+                            <input type="number" formControlName="number"
+                                [ngClass]="{ 'is-invalid': submitted && controls.number.errors }"
+                                class="form-control form-control-lg" placeholder="Number"
+                                aria-label="Number" aria-describedby="basic-addon1" required="" />
+                            
+                            <div *ngIf="submitted && controls.number.errors" class="invalid-feedback">
+                                <div *ngIf="controls.number.errors.required">Fill number field.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="error" class="alert alert-danger mt-0 mb-3">{{error}}</div>
+                
+                <div class="col-12 flex-column register">
+                    <button type="button" type="submit" class="btn btn-primary" 
+                    (click)="onSubmit()">{{ loading ? 'Loading...' : 'Submit' }}</button>
+                </div>
+
+                </form>
+            </div>
+            
+      </div>
+  </div>
+</div>

@@ -16,6 +16,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { UserHomeModule } from './user-home/user.home.module'
 
 registerLocaleData(localePt);
 
@@ -35,6 +36,7 @@ registerLocaleData(localePt);
     NgxMaskModule.forRoot(),
     NgbModule,
     AuthenticationModule,
+    UserHomeModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },

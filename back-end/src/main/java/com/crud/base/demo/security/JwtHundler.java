@@ -25,14 +25,14 @@ public class JwtHundler {
 
   public String generateJwtToken(User user){
     return Jwts.builder()
-        .setSubject(user.getUsername())
+        .setSubject(user.getId().toString())
         .setIssuedAt(new Date())
         .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
         .signWith(SignatureAlgorithm.HS512, jwtSecret)
         .compact();
   }
 
-  public String getUserNameFromJwtToken(String token) {
+  public String getUserIdFromJwtToken(String token) {
     return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
   }
 
