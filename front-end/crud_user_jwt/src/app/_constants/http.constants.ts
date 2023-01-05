@@ -11,7 +11,9 @@ export const HTTP_STATUS_NOT_FOUND = 404
 
 export const HTTP_STATUS_SERVER_ERROR = 500
 
-export const HTTP_STATUS_CONFLIT = 403
+export const HTTP_STATUS_CONFLIT = 409
+
+export const HTTP_STATUS_FORBIDDEN = 403
 
 export const HTTP_STATUS_UNAUTHORIZED = 401
 

@@ -40,9 +40,7 @@ public class JwtHundler {
     try {
       Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
       return true;
-    } catch (SignatureException e) {
-      
-    }
+    } catch (Exception ignored) {}
 
     return false;
   }

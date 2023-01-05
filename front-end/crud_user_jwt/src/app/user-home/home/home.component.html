@@ -14,7 +14,8 @@
                 </ul>
                 <hr>
                 <div *ngIf="user" class="dropdown pb-4">
-                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="d-none d-sm-inline mx-1">{{user.email}}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
@@ -24,7 +25,7 @@
             </div>
         </div>
         <div class="col py-3 card" style="padding: 3em; margin: 1.5em;">
-            
+
             <div *ngIf="loading" class="spinner-grow text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
@@ -39,19 +40,40 @@
                     You do not have addresses associated with this account.
                 </div>
 
-                <ul *ngIf="user.addresses" class="list-group">
-                    <b style="margin: 1.5em;">Your addresses</b>
-                    <li class="list-group-item"
-                    *ngFor="let address of user.addresses | paginate: {
-                                                        itemsPerPage: pageSize,
-                                                        currentPage: page,
-                                                        totalItems: user.addresses.length }">
-                        {{ address.street }} {{ address.number }}, {{ address.district }}, {{ address.city }}, {{ address.state }}, {{ address.country }}
-                        <a routerLink="/users/address/{{address.id}}" class="btn btn-link"><strong>Edit</strong></a>
-                        
-                    </li>
-                    <pagination-controls (pageChange)="handlePageChange($event)"></pagination-controls>
-                </ul>
+                <table *ngIf="user.addresses" class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Number</th>
+                            <th scope="col">Street</th>
+                            <th scope="col">Distrinct</th>
+                            <th scope="col">City</th>
+                            <th scope="col">State</th>
+                            <th scope="col">Country</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let address of user.addresses | paginate: {
+                    itemsPerPage: pageSize,
+                    currentPage: page,
+                    totalItems: user.addresses.length }">
+                            <th>{{ address.number }}</th>
+                            <th>{{ address.street }}</th>
+                            <th>{{ address.district }}</th>
+                            <th>{{ address.city }}</th>
+                            <th>{{ address.state }}</th>
+                            <th>{{ address.country }}</th>
+                            <th>
+                                <a routerLink="/users/address/{{address.id}}" class="btn btn-link"><strong>Edit</strong></a>
+                                <delete-address [id]="address.id"></delete-address>
+                            </th>
+                        </tr>
+                        <tr>
+                            <pagination-controls (pageChange)="handlePageChange($event)"></pagination-controls>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
             <button (click)="addAddress()" type="button" class="btn btn-primary">Add address</button>
         </div>
