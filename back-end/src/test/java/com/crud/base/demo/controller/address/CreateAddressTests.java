@@ -2,6 +2,7 @@ package com.crud.base.demo.controller.address;
 
 
 import com.crud.base.demo.TestsUtils;
+import com.crud.base.demo.exceptions.NotAllowedException;
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
 import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.model.Address;
@@ -82,12 +83,12 @@ public class CreateAddressTests {
     }
 
     @After
-    public void afterEach() throws ResourceNotFoundException {
+    public void afterEach() throws ResourceNotFoundException, NotAllowedException {
 
-        addressService.deleteAddressById(testerUser.getId(), addressAlreadyExists.getId());
+        addressService.deleteById(testerUser.getId(), addressAlreadyExists.getId());
 
         if(addressToCreate.getId() != null){
-            addressService.deleteAddressById(testerUser.getId(), addressToCreate.getId());
+            addressService.deleteById(testerUser.getId(), addressToCreate.getId());
         }
         userRepository.deleteById(testerUser.getId());
 

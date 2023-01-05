@@ -1,6 +1,7 @@
 package com.crud.base.demo.controller.address;
 
 import com.crud.base.demo.TestsUtils;
+import com.crud.base.demo.exceptions.NotAllowedException;
 import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
 import com.crud.base.demo.model.Address;
@@ -66,8 +67,8 @@ public class SearchAddressTests {
     }
 
     @After
-    public void afterEach() throws ResourceNotFoundException {
-        addressService.deleteAddressById((UUID) userAuth.get("id"), addressAlreadyExists.getId());
+    public void afterEach() throws ResourceNotFoundException, NotAllowedException {
+        addressService.deleteById((UUID) userAuth.get("id"), addressAlreadyExists.getId());
         userRepository.deleteById((UUID) userAuth.get("id"));
     }
 

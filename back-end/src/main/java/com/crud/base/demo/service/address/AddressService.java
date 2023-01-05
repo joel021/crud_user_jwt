@@ -1,5 +1,6 @@
 package com.crud.base.demo.service.address;
 
+import com.crud.base.demo.exceptions.NotAllowedException;
 import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
 import com.crud.base.demo.model.Address;
@@ -44,9 +45,6 @@ public class AddressService {
         return addressRepository.save(address);
     }
 
-    public void deleteById(UUID id){
-        addressRepository.deleteById(id);
-    }
 
     public Address findById(UUID id) throws ResourceNotFoundException{
         Optional<Address> a = addressRepository.findById(id);
@@ -56,12 +54,14 @@ public class AddressService {
         throw new ResourceNotFoundException("Can't find address requested.");
     }
 
-    public void deleteAddressById(UUID userId, UUID addressId) throws ResourceNotFoundException {
-        User userFound = searchUserService.findById(userId);
-        Address address = new Address();
-        userFound.removeAddress(address);
+    public void deleteById(UUID userId, UUID addressId) throws ResourceNotFoundException, NotAllowedException {
 
-        userRepository.save(userFound);
+        Address addressFound = findById(addressId);
+
+        if (!userId.toString().equals(addressFound.getOwner().getId().toString())) {
+            throw new NotAllowedException("This address do not exist on your account.");
+        }
+
         addressRepository.deleteById(addressId);
     }
 }

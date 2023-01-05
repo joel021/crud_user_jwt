@@ -3,8 +3,8 @@ package com.crud.base.demo.controller.address;
 
 import com.crud.base.demo.TestsUtils;
 import com.crud.base.demo.exceptions.NotAllowedException;
-import com.crud.base.demo.exceptions.ResourceNotFoundException;
 import com.crud.base.demo.exceptions.ResourceAlreadyExists;
+import com.crud.base.demo.exceptions.ResourceNotFoundException;
 import com.crud.base.demo.model.Address;
 import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
@@ -25,15 +25,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.UUID;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UpdateAddressTests {
+public class DeleteAddressTests {
 
     @Inject
     private MockMvc mockMvc;
@@ -52,44 +53,40 @@ public class UpdateAddressTests {
 
     private HashMap<String, Object> userAuth;
 
-    private Address addressAlreadyExists;
+    private Address addressToBeDeleted;
 
 
     @Before
     public void beforeAach() throws ResourceAlreadyExists, ResourceNotFoundException {
-        User userCreated = authService.signup(new User("userAuthdAddressSearch@gmail.com", "password", Role.USER));
+        User userCreated = authService.signup(new User("userAuthdAddressDelete@gmail.com", "password", Role.USER));
         userCreated.setPassword("password");
         userAuth = authService.signin(userCreated);
         userAuth.put("id", userCreated.getId());
 
-        addressAlreadyExists = new Address("country45", "state45", "city45", "district", "street", 0);
-        addressAlreadyExists = addressService.create(userCreated.getId(), addressAlreadyExists);
+        addressToBeDeleted = new Address("countryDelete", "stateDelete", "cityDelete", "districtDelete", "street", 0);
+        addressToBeDeleted = addressService.create(userCreated.getId(), addressToBeDeleted);
     }
 
     @After
-    public void afterEach() throws ResourceNotFoundException, NotAllowedException {
-        addressService.deleteById((UUID) userAuth.get("id"), addressAlreadyExists.getId());
+    public void afterEach() {
         userRepository.deleteById((UUID) userAuth.get("id"));
     }
 
     @Test
-    public void dreamUpdate() throws Exception {
-        addressAlreadyExists.setOwner(null);
-        String newCity = "Cruz das Almas";
-        addressAlreadyExists.setCity(newCity);
-        String bodyContent = TestsUtils.objectToJson(addressAlreadyExists);
+    public void dreamDelete() throws Exception {
 
-        MvcResult result = mockMvc.perform(
-                put("/users/address/"+addressAlreadyExists.getId().toString())
-                        .contentType(TestsUtils.CONTENT_TYPE)
-                        .content(bodyContent)
-                        .header("authorization", "Bearer " + userAuth.get("token"))
-                )
+        mockMvc.perform(
+                        delete("/users/address/"+addressToBeDeleted.getId().toString())
+                                .contentType(TestsUtils.CONTENT_TYPE)
+                                .header("authorization", "Bearer " + userAuth.get("token")))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        final HashMap<String, Object> responseBody = new ObjectMapper().readValue(result.getResponse().getContentAsString(), HashMap.class);
-        assert (newCity.equals(responseBody.get("city")));
-    }
+        Address addressAssertion = null;
+        try {
+            addressAssertion = addressService.findById(addressToBeDeleted.getId());
+        }catch (ResourceNotFoundException ignored){}
 
+        assert ( addressAssertion == null);
+    }
 }
