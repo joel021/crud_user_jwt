@@ -23,8 +23,9 @@
 hs_err_pid*
 
 *.vscode
-*.idea
+.idea
 *.angular
 yarn.lock
 *target*
 back-end/src/main/resources/application.properties
+node_modules
