@@ -62,7 +62,7 @@ public class SearchAddressTests {
         userAuth = authService.signin(userCreated);
         userAuth.put("id", userCreated.getId());
 
-        addressAlreadyExists = new Address("country45", "state45", "city45", "district", "street", 0);
+        addressAlreadyExists = new Address("country45", "state45", "city45", "district", "street", 0, "445380-000");
         addressAlreadyExists = addressService.create(userCreated.getId(), addressAlreadyExists);
     }
 

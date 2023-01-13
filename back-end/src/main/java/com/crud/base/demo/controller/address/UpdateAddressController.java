@@ -1,8 +1,8 @@
 package com.crud.base.demo.controller.address;
 
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
-import com.crud.base.demo.model.Address;
 import com.crud.base.demo.model.User;
+import com.crud.base.demo.model.Address;
 import com.crud.base.demo.service.address.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

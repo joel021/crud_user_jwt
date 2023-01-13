@@ -63,7 +63,7 @@ public class DeleteAddressTests {
         userAuth = authService.signin(userCreated);
         userAuth.put("id", userCreated.getId());
 
-        addressToBeDeleted = new Address("countryDelete", "stateDelete", "cityDelete", "districtDelete", "street", 0);
+        addressToBeDeleted = new Address("countryDelete", "stateDelete", "cityDelete", "districtDelete", "street", 0, "44580-000");
         addressToBeDeleted = addressService.create(userCreated.getId(), addressToBeDeleted);
     }
 

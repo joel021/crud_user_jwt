@@ -40,17 +40,21 @@ public class Address {
     @NotNull(message = "The number is required.")
     private int number;
 
+    @NotBlank(message = "CEP is required.")
+    private String cep;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User owner;
 
-    public Address(String country, String state, String city, String district, String street, int number){
+    public Address(String country, String state, String city, String district, String street, int number, String cep){
         this.street = street;
         this.state = state;
         this.country = country;
         this.number = number;
         this.city = city;
         this.district = district;
+        this.cep = cep;
     }
     public Address (){}
 
@@ -145,5 +149,13 @@ public class Address {
 
         final ObjectMapper mapper = new ObjectMapper();
         return mapper.convertValue(addressMap, Address.class);
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 }
