@@ -88,6 +88,19 @@
                                 <div *ngIf="controls.number.errors.required">Fill number field.</div>
                             </div>
                         </div>
+
+                        <!-- cep -->
+                        <div class="input-group mb-3">
+                            
+                            <input type="text" formControlName="cep"
+                                [ngClass]="{ 'is-invalid': submitted && controls.cep.errors }"
+                                class="form-control form-control-lg" placeholder="CEP"
+                                aria-label="CEP" aria-describedby="basic-addon1" required="" />
+                            
+                            <div *ngIf="submitted && controls.cep.errors" class="invalid-feedback">
+                                <div *ngIf="controls.cep.errors.required">Fill number field.</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div *ngIf="error" class="alert alert-danger mt-0 mb-3">{{error}}</div>

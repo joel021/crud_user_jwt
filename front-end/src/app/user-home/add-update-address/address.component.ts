@@ -45,7 +45,8 @@ export class CreateAddress extends PageActionsComponent implements OnInit {
       state: ['', Validators.required],
       country: ['', Validators.required],
       city: ['', Validators.required],
-      number: ['', Validators.required]
+      number: ['', Validators.required],
+      cep: ['', Validators.required]
     });
 
     if (this.addressId != null){
@@ -71,6 +72,7 @@ export class CreateAddress extends PageActionsComponent implements OnInit {
       city: this.controls.city.value,
       state: this.controls.state.value,
       country: this.controls.country.value,
+      cep: this.controls.cep.value,
       id: this.addressId
     }
 
@@ -160,7 +162,8 @@ export class CreateAddress extends PageActionsComponent implements OnInit {
           district: address.district,
           city: address.city,
           state: address.state,
-          country: address.country
+          country: address.country,
+          cep: address.cep
         })
       },
       error: errorObject => {
