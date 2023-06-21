@@ -8,7 +8,7 @@ import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.model.Address;
 import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
-import com.crud.base.demo.model.UserExtended;
+import com.crud.base.demo.model.UserDTO;
 import com.crud.base.demo.repository.UserRepository;
 import com.crud.base.demo.service.address.AddressService;
 import com.crud.base.demo.service.user.AuthService;
@@ -55,7 +55,7 @@ public class CreateAddressTests {
     @Autowired
     private DeleteUserService deleteUserService;
 
-    private UserExtended testerUser;
+    private UserDTO testerUser;
     private HashMap<String, Object> authUser;
 
     private Address addressToCreate, addressAlreadyExists;
@@ -66,10 +66,10 @@ public class CreateAddressTests {
 
         try {
             User testerUser = authService.signup(new User("addressTesterUser@gmail.com", "password", Role.USER));
-            this.testerUser = new UserExtended(testerUser);
+            this.testerUser = new UserDTO(testerUser);
         } catch (ResourceAlreadyExists ignored) {
             User testerUser = userRepository.findByEmail("addressTesterUser@gmail.com").get(0);
-            this.testerUser = new UserExtended(testerUser);
+            this.testerUser = new UserDTO(testerUser);
         }
 
         testerUser.setPassword("password");

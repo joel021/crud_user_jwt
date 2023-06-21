@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SearchUserTests {
+public class UserControllerUserTests {
 
     @Inject
     private MockMvc mockMvc;

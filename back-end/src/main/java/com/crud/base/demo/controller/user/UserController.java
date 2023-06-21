@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("users")
-public class Search {
+public class UserController {
 
     @Autowired
     private SearchUserService searchUserService;

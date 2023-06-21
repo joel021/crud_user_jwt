@@ -1,10 +1,12 @@
 package com.crud.base.demo.model;
 
-public class UserExtended extends User {
+import com.crud.base.demo.model.User;
+
+public class UserDTO extends User {
     private String passwordConfirmation;
     private String token;
 
-    public UserExtended(User user){
+    public UserDTO(User user){
         super(user.getId(), user.getEmail(), user.getPassword(), user.getRole());
     }
     public String getToken() {
@@ -15,7 +17,7 @@ public class UserExtended extends User {
         this.token = token;
     }
 
-    public UserExtended(){
+    public UserDTO(){
     }
 
     public String getPasswordConfirmation() {

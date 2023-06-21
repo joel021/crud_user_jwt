@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.crud.base.demo.model.UserExtended;
+import com.crud.base.demo.model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("users")
-public class Auth {
+public class AuthController {
 
     @Autowired
     private AuthService authService;
@@ -33,7 +33,7 @@ public class Auth {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Map<String, Object>> signup(@RequestBody @Valid UserExtended user)  {
+    public ResponseEntity<Map<String, Object>> signup(@RequestBody @Valid UserDTO user)  {
         
         if (!user.getPassword().equals(user.getPasswordConfirmation())) {
             HashMap<String, Object> resp = new HashMap<>();

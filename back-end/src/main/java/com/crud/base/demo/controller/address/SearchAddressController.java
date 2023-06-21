@@ -1,40 +1,38 @@
 package com.crud.base.demo.controller.address;
 
-import com.crud.base.demo.exceptions.ResourceNotFoundException;
-import com.crud.base.demo.model.User;
 import com.crud.base.demo.model.Address;
+import com.crud.base.demo.model.User;
 import com.crud.base.demo.service.address.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("users/address")
-public class UpdateAddressController {
+public class SearchAddressController {
 
     @Autowired
     private AddressService addressService;
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<?> putAddress(@RequestBody Map<String, Object> address, @PathVariable String id){
-        Address putAddress = Address.parseAddress(address);
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> fetchAddressById(@PathVariable String id) {
         Address addressFound;
         HashMap<String, Object> respBody = new HashMap();
 
         try {
-            addressFound = addressService.findById(putAddress.getId());
+            addressFound = addressService.findById(UUID.fromString(id));
         } catch (Exception err) {
 
             respBody.put("message", err.getMessage());
+
             return ResponseEntity
                     .status(HttpStatus.NOT_ACCEPTABLE)
                     .body(respBody);
@@ -42,24 +40,15 @@ public class UpdateAddressController {
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (!addressFound.getOwner().getId().toString().equals(user.getId().toString())){
+        if (addressFound.getOwner().getId() == user.getId()){
             respBody.put("message", "This address does not exists."); //to the account of this user.
             return ResponseEntity
                     .status(HttpStatus.FORBIDDEN)
                     .body(respBody);
         }
-
-        try{
-            Address addressUpdated = addressService.update(user.getId(), putAddress);
-            addressUpdated.setOwner(null);
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(addressUpdated);
-        }catch (ResourceNotFoundException ignored){
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("The system can't update this address because it can't find the owner user.");
-        }
+        addressFound.setOwner(null);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(addressFound);
     }
-
 }
