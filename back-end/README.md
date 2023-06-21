@@ -1,7 +1,7 @@
 # Back-end using Spring Boot framework
 
 <h2>Setup</h2>
-
+- Download the project or use $git clone git@github.com:joel021/crud_user_jwt.git
 - Go to <i>src/main/resources/</i>
 - Create <i>application.properties</i> file using <i> application.properties.example</i> as example
 - Change the values of applicable parameters on the file, as <i>spring.datasource.username</i> and <i>spring.datasource.password</i>

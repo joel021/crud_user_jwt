@@ -13,10 +13,10 @@ import java.util.HashMap;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TestTests {
+public class TestTest {
 
     @Test
-    public void parseAddressModel(){
+    public void parseAddressModelTest(){
         HashMap<String, Object> addressMap = new HashMap<>();
         String cep = "44530-000";
         addressMap.put("cep",cep);
