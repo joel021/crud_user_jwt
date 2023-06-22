@@ -1,26 +1,13 @@
-name: Java CI/CD
-
-on:
-  push:
-    branches:
-      - main
-
+name: Build and Test Java Spring Boot Application
+on: push
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up Java
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-
-      - name: Build with Maven
-        run: mvn clean install
-
-      - name: Deploy to Production
-        run: |
-          scp target/your-application.jar user@your-server:/path/to/deployment
+  steps:
+    - checkout
+    - run: mvn clean package
+    - run: echo "BUILD SUCCESS"
+test:
+  steps:
+    - checkout
+    - run: mvn test
+    - run: echo "TEST SUCCESS"
