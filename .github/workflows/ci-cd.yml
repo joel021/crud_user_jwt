@@ -1,13 +1,14 @@
+– uses: actions/checkout@v2
 name: Build and Test Java Spring Boot Application
 on: push
 jobs:
   build:
   steps:
     - checkout
-    - run: mvn clean package
+    - run: cd ./back-end/ && mvn clean package
     - run: echo "BUILD SUCCESS"
 test:
   steps:
     - checkout
-    - run: mvn test
+    - run: cd ./back-end/ && mvn test
     - run: echo "TEST SUCCESS"
