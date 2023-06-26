@@ -23,7 +23,7 @@ jobs:
           maven-version: 3.9.3
 
       - name: Set up MySQL
-        uses: mysql/setup-mysql@v3
+        uses: mysql/setup-mysql@v2
         with:
           mysql-version: '8.0'
           password: ${{ secrets.DB_PASSWORD }}
