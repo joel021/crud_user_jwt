@@ -1,6 +1,5 @@
 version: '3.1'
 services:
-
   mysql-standalone:
     image: mysql:8.0
     environment:
@@ -8,6 +7,8 @@ services:
       - MYSQL_DATABASE=user_crud_db
     ports:
       - "3306:3306"
+    networks:
+      - my-network
 
   user-crud-application-container:
     image: user-crud-application
@@ -20,3 +21,8 @@ services:
       dockerfile: "Dockerfile"
     depends_on:
       - mysql-standalone
+    networks:
+      - my-network
+
+networks:
+  my-network:

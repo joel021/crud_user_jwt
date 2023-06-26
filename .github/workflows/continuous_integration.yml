@@ -14,10 +14,11 @@ jobs:
       mysql-standalone:
         image: mysql:8.0
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          MYSQL_DATABASE: user_address_crud_db
-          MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}  # Set the secret name for DB_PASSWORD
+          MYSQL_ROOT_PASSWORD: default_mysql_pass
+          MYSQL_DATABASE: user_crud_db
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        ports:
+          - 3306:3306
 
     steps:
       - name: Checkout
@@ -35,7 +36,7 @@ jobs:
           maven-version: 3.9.3
 
       - name: Unit Tests
-        run: export DB_PASSWORD=${{ secrets.DB_PASSWORD }} && cd back-end && mvn clean package
+        run: export DB_PASSWORD=default_mysql_pass && cd back-end && mvn clean package
 
       - name: Rename the artifact
         run: cp back-end/target/user-address-crud user-address-crud-${{ github.sha }}.jar
