@@ -4,20 +4,17 @@ services:
   mysql-standalone:
     image: mysql:8.0
     environment:
-      - MYSQL_ROOT_PASSWORD=default_mysql_docker_pass
-      - MYSQL_PASSWORD=default_mysql_docker_pass
+      - MYSQL_ROOT_PASSWORD=default_mysql_pass
       - MYSQL_DATABASE=user_crud_db
     ports:
-      - "3307:3307"
+      - "3306:3306"
 
   user-crud-application-container:
     image: user-crud-application
     ports:
-      - "8082:8082"
+      - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-standalone:3307/user_crud_db
-      SPRING_DATASOURCE_USERNAME: "root"
-      DB_PASSWORD: "default_mysql_docker_pass"
+      DB_PASSWORD: default_mysql_pass
     build:
       context: "./"
       dockerfile: "Dockerfile"

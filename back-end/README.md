@@ -1,6 +1,20 @@
 # Back-end using Spring Boot framework
 
-<h2>Setup</h2>
+<h2>Run using docker</h2>
+If is the first time, run
+
+$docker-compose up
+
+Run the follow command if you want to update the application
+
+$docker-compose up --build --no-deps user-crud-application-container
+
+
+To clean docker cache: $docker system prune -a
+
+
+
+<h2>Setup in local</h2>
 - Download the project or use $git clone git@github.com:joel021/crud_user_jwt.git
 - Go to <i>src/main/resources/</i>
 - Create <i>application.properties</i> file using <i> application.properties.example</i> as example
@@ -19,4 +33,3 @@
 - Go to https://start.spring.io/ and create new project choosing Java 8, Maven and Spring Boot 2.7.
 - Copy this project classes files to the new project
 - Handle the dependencies
-
