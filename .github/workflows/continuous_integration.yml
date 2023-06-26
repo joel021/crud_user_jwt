@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: alpine
+          distribution: 'adopt'
 
       - name: Setup Maven
         uses: stCarolas/setup-maven@v4.4
