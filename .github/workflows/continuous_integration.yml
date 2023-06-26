@@ -6,6 +6,18 @@ on:
       - master
 
 jobs:
+
+  services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}  # Set the secret name for DB_PASSWORD
+          MYSQL_DATABASE: user_address_crud_db
+          MYSQL_USER: root
+          MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}  # Set the secret name for DB_PASSWORD
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+
   run-unit-tests:
     runs-on: ubuntu-latest
     steps:
@@ -21,12 +33,6 @@ jobs:
         uses: stCarolas/setup-maven@v4.4
         with:
           maven-version: 3.9.3
-
-      - name: Set up MySQL
-        uses: mysql/setup-mysql@v2
-        with:
-          mysql-version: '8.0'
-          password: ${{ secrets.DB_PASSWORD }}
 
       - name: Unit Tests
         run: cd back-end/target && mvn clean package
