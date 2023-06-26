@@ -35,7 +35,7 @@ jobs:
           maven-version: 3.9.3
 
       - name: Unit Tests
-        run: cd back-end/target && mvn clean package
+        run: cd back-end && mvn clean package
 
       - name: Rename the artifact
         run: cp back-end/target/user-address-crud user-address-crud-${{ github.sha }}.jar
