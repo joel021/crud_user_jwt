@@ -14,9 +14,8 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}  # Set the secret name for DB_PASSWORD
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
           MYSQL_DATABASE: user_address_crud_db
-          MYSQL_USER: root
           MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}  # Set the secret name for DB_PASSWORD
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
