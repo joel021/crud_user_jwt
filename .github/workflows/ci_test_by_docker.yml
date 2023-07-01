@@ -27,11 +27,12 @@ jobs:
       run: docker-compose -f "back-end/docker-compose-ci-test.yml" down
 
   release-package:
-
+    
+    runs-on: ubuntu-latest
+    
     steps:
-
     - name: Checkout
-        uses: actions/checkout@v3
+      uses: actions/checkout@v1
 
     - name: Setup Java
       uses: actions/setup-java@v3
@@ -51,7 +52,7 @@ jobs:
         mvn clean install -DskipTests
         
     - name: Rename the artifact
-        run: cp back-end/target/user-address-crud.jar user-address-crud-${{ github.sha }}.jar
+      run: cp back-end/target/user-address-crud.jar user-address-crud-${{ github.sha }}.jar
 
     - name: Save the artifact
       uses: actions/upload-artifact@master
