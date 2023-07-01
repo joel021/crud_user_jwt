@@ -1,7 +1,5 @@
 package com.crud.base.demo.model;
 
-import com.crud.base.demo.model.User;
-
 public class UserDTO extends User {
     private String passwordConfirmation;
     private String token;

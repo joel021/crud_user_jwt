@@ -5,7 +5,7 @@ WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 
-RUN mvn install -DskipTests
+RUN mvn install -Pprod -DskipTests
 
 FROM openjdk:17
 

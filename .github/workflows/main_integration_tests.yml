@@ -54,7 +54,7 @@ jobs:
       run: |
         export DB_PASSWORD=root
         cd back-end
-        mvn clean install
+        mvn clean package -Pprod
         
     - name: Rename the artifact
       run: cp back-end/target/user-address-crud.jar user-address-crud-${{ github.sha }}.jar

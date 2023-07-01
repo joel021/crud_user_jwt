@@ -10,8 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.crud.base.demo.model.User;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
-    
-    @Query("select u from user u where u.email = ?1")
+
     List<User> findByEmail(String email);
 
 }
