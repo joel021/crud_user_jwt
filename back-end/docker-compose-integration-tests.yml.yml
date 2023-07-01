@@ -18,7 +18,7 @@ services:
       DB_PASSWORD: default_mysql_pass
     build:
       context: "./"
-      dockerfile: "DockerfileRunTest"
+      dockerfile: "DockerfileRunTests"
     depends_on:
       - mysql-standalone
     networks:
