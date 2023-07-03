@@ -1,5 +1,13 @@
 # Crud User Jwt
 
+## Setup
+
+- install <a href="https://nodejs.org/en">node js</a> on your machine
+- install <a href="https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable">yarn</a> on node js global
+- run $<i>yarn install</i> to install the dependencies
+- run $<i>yarn start</i> to start the application in localhost:4200
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
 
 ## Development server
