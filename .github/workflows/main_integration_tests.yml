@@ -14,7 +14,8 @@ env:
   MYSQL_DATABASE: user_crud_db
   DB_USER: root
   DB_PASSWORD: root
-            
+
+
 jobs:
 
   run-integration-tests:
@@ -65,4 +66,6 @@ jobs:
         name: user-address-crud-back-end
         path: user-address-crud-${{ github.sha }}.jar
 
-  
+  - name: Build docker
+        run: |
+          docker build -t spring-app-built .
