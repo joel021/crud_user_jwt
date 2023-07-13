@@ -23,49 +23,49 @@ jobs:
     runs-on: ubuntu-20.04
     
     steps:
-    - name: Initialize MySQL
-      run: sudo systemctl start mysql.service
+      - name: Initialize MySQL
+        run: sudo systemctl start mysql.service
 
-    - name: Initialize first database
-      run: |
-        mysql -e 'CREATE DATABASE ${{ env.MYSQL_DATABASE }};' \
-        -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
+      - name: Initialize first database
+        run: |
+          mysql -e 'CREATE DATABASE ${{ env.MYSQL_DATABASE }};' \
+          -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
 
-    - name: Boost user
-      run: |
-        mysql -e "ALTER USER '${{ env.DB_USER }}'@'localhost' \
-        IDENTIFIED WITH mysql_native_password BY 'root';" \
-        -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
+      - name: Boost user
+        run: |
+          mysql -e "ALTER USER '${{ env.DB_USER }}'@'localhost' \
+          IDENTIFIED WITH mysql_native_password BY 'root';" \
+          -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
 
-    - name: Check out repository code
-      uses: actions/checkout@v3
+      - name: Check out repository code
+        uses: actions/checkout@v3
 
-    - name: Setup Java
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'adopt'
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
 
-    - name: Setup Maven
-      uses: stCarolas/setup-maven@v4.4
-      with:
-        maven-version: 3.9.3
+      - name: Setup Maven
+        uses: stCarolas/setup-maven@v4.4
+        with:
+          maven-version: 3.9.3
 
-    - name: compile and test to export
-      run: |
-        export DB_PASSWORD=root
-        cd back-end
-        mvn clean package -Pprod
-        
-    - name: Rename the artifact
-      run: cp back-end/target/user-address-crud.jar user-address-crud-${{ github.sha }}.jar
+      - name: compile and test to export
+        run: |
+          export DB_PASSWORD=root
+          cd back-end
+          mvn clean package -Pprod
+          
+      - name: Rename the artifact
+        run: cp back-end/target/user-address-crud.jar user-address-crud-${{ github.sha }}.jar
 
-    - name: Save the artifact
-      uses: actions/upload-artifact@master
-      with:
-        name: user-address-crud-back-end
-        path: user-address-crud-${{ github.sha }}.jar
+      - name: Save the artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: user-address-crud-back-end
+          path: user-address-crud-${{ github.sha }}.jar
 
-  - name: Build docker
+      - name: Build docker
         run: |
           docker build -t spring-app-built .
