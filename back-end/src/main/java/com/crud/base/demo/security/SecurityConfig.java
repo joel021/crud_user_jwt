@@ -25,7 +25,7 @@ public class SecurityConfig  {
     private AuthDetailsHundlerService userService;
 
     @Autowired
-    private AuthEntryPointJwt unauthorizedHandler;
+    private AuthExceptionHandler unauthorizedHandler;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -54,6 +54,7 @@ public class SecurityConfig  {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
