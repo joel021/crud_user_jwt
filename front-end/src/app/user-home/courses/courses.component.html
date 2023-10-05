@@ -31,7 +31,29 @@
                 </div>
             </div>
         </div>
-        <div class="col py-3 card" style="padding: 3em; margin: 1.5em;">
+        <!-- CONTENT -->
+
+        <div class="col" style="padding: 3em; margin: 1.5em;">
+
+            <div class="row">
+                <form class="form-horizontal m-t-20" [formGroup]="searchForm">
+                    <div class="input-group">
+
+                        <div class="form-outline">
+                            <input type="text" formControlName="name"
+                                            [ngClass]="{ 'is-invalid': submitted && controls.name.errors }"
+                                            class="form-control form-control-lg" placeholder="Nome do curso"
+                                            aria-label="Nome do curso" aria-describedby="basic-addon1" required="" />
+                        </div>
+                        <button (click)="updateCourses()" type="button" class="btn btn-primary">
+                            buscar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <button style="margin-top:1em; margin-bottom:1em" type="button" (click)="registerCourse()"
+                class="btn btn-outline-primary">Cadastrar curso</button>
 
             <div *ngIf="loading" class="spinner-grow text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
@@ -42,47 +64,31 @@
                 {{ error }}
             </div>
 
-            <div *ngIf="user">
-                <div *ngIf="user.addresses == null" class="alert alert-warning" role="alert">
-                    You do not have addresses associated with this account.
-                </div>
-
-                <table *ngIf="user.addresses" class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Number</th>
-                            <th scope="col">Street</th>
-                            <th scope="col">Distrinct</th>
-                            <th scope="col">City</th>
-                            <th scope="col">State</th>
-                            <th scope="col">Country</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let address of user.addresses | paginate: {
-                    itemsPerPage: pageSize,
-                    currentPage: page,
-                    totalItems: user.addresses.length }">
-                            <th>{{ address.number }}</th>
-                            <th>{{ address.street }}</th>
-                            <th>{{ address.district }}</th>
-                            <th>{{ address.city }}</th>
-                            <th>{{ address.state }}</th>
-                            <th>{{ address.country }}</th>
-                            <th>
-                                <a routerLink="/users/address/{{address.id}}" class="btn btn-link"><strong>Edit</strong></a>
-                                <delete-address [id]="address.id"></delete-address>
-                            </th>
-                        </tr>
-                        <tr>
-                            <pagination-controls (pageChange)="handlePageChange($event)"></pagination-controls>
-                        </tr>
-                    </tbody>
-                </table>
-
+            <div *ngIf="courses == null && courseMessage!=null" class="alert alert-primary" role="alert">
+                {{courseMessage}}
             </div>
-            <button (click)="addAddress()" type="button" class="btn btn-primary">Add address</button>
+
+            <table *ngIf="courses" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Ano</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let course of courses | paginate: {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: courses.length }">
+                        <th>{{ course.name }}</th>
+                        <th>{{ course.year }}</th>
+                    </tr>
+                    <tr>
+                        <pagination-controls (pageChange)="handlePageChange($event)"></pagination-controls>
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
     </div>
 </div>

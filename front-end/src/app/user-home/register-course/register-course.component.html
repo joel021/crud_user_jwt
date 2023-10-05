@@ -1,0 +1,88 @@
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">Menu</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item">
+                        <a href="/home" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/users/courses" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Curso</span>
+                        </a>
+                    </li>
+
+                </ul>
+                <hr>
+                
+            </div>
+        </div>
+
+        
+        <div class="col py-3 card" style="padding: 3em; margin: 1.5em;">
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="text-center p-t-20 p-b-20">
+                        <h1>Cadastro de curso</h1>
+                    </div>
+
+                    <div *ngIf="courseCreated!=null" class="alert alert-success" role="alert">
+                        O curso {{courseCreated}} foi criado com sucesso!
+                    </div>
+
+                    <!-- Form -->
+                    <div class="card" style="padding:1.5em;">
+                        <form class="form-horizontal m-t-20" [formGroup]="courseForm">
+                            <div class="row p-b-0">
+                                <div class="card" style="margin-top:1.5em;">
+                                    <!-- name -->
+                                    <div class="input-group mb-3" style="margin-top:1.5em;">
+
+                                        <input type="text" formControlName="name"
+                                            [ngClass]="{ 'is-invalid': submitted && controls.name.errors }"
+                                            class="form-control form-control-lg" placeholder="Nome do curso"
+                                            aria-label="Nome do curso" aria-describedby="basic-addon1" required="" />
+
+                                        <div *ngIf="submitted && controls.name.errors" class="invalid-feedback">
+                                            <div *ngIf="controls.name.errors.required">Preencha o nome do curso</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Year -->
+                                    <div class="input-group mb-3">
+
+                                        <input type="text" formControlName="year"
+                                            [ngClass]="{ 'is-invalid': submitted && controls.year.errors }"
+                                            class="form-control form-control-lg" placeholder="Ano do curso"
+                                            aria-label="Ano do curso" aria-describedby="basic-addon1" required="" />
+
+                                        <div *ngIf="submitted && controls.year.errors" class="invalid-feedback">
+                                            <div *ngIf="controls.year.errors.required">Preencha o ano do curso
+                                                corretamente</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div *ngIf="error" class="alert alert-danger mt-0 mb-3">{{error}}</div>
+
+                            <div class="col-12 flex-column register">
+                                <button type="button" type="submit" class="btn btn-primary" (click)="onSubmit()">{{
+                                    loading ? 'Carregando...' : 'Criar' }}</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

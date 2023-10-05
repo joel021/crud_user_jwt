@@ -6,12 +6,16 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { UserHome } from './home/home.component';
 import { CreateAddress } from './add-update-address/address.component';
 import { DeleteAddress } from './delete-address/delete.address.component';
+import { RegisterCoursePage } from './register-course/register-course.component';
+import { CoursesPage } from './courses/courses.component';
 
 @NgModule({
   declarations: [
     UserHome,
     CreateAddress,
-    DeleteAddress
+    DeleteAddress,
+    CoursesPage,
+    RegisterCoursePage
   ],
   imports: [
     CommonModule,

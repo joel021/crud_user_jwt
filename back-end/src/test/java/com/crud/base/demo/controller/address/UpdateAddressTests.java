@@ -9,7 +9,7 @@ import com.crud.base.demo.model.Address;
 import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
 import com.crud.base.demo.repository.UserRepository;
-import com.crud.base.demo.service.address.AddressService;
+import com.crud.base.demo.service.AddressService;
 import com.crud.base.demo.service.user.AuthService;
 import com.crud.base.demo.service.user.DeleteUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;

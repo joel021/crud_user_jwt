@@ -38,4 +38,10 @@ export class FetchGenericService {
     return this.http.get<any>(`${environment.apiUrl}/${resource}/${id}`);
   }
 
+  readWithParams(resource: string, params:any): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/${resource}`, {
+      params: params
+    });
+  }
+
 }

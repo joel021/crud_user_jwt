@@ -10,9 +10,8 @@ import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
 import com.crud.base.demo.model.UserDTO;
 import com.crud.base.demo.repository.UserRepository;
-import com.crud.base.demo.service.address.AddressService;
+import com.crud.base.demo.service.AddressService;
 import com.crud.base.demo.service.user.AuthService;
-import com.crud.base.demo.service.user.CreateUserService;
 import com.crud.base.demo.service.user.DeleteUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
@@ -48,9 +47,6 @@ public class CreateAddressTests {
     
     @Autowired
     private AddressService addressService;
-
-    @Autowired
-    private CreateUserService createUserService;
 
     @Autowired
     private DeleteUserService deleteUserService;

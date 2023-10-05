@@ -1,9 +1,8 @@
 package com.crud.base.demo.service.user;
 
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
-import com.crud.base.demo.model.Address;
 import com.crud.base.demo.model.User;
-import com.crud.base.demo.service.address.AddressService;
+import com.crud.base.demo.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.crud.base.demo.service.address;
+package com.crud.base.demo.service;
 
 import com.crud.base.demo.exceptions.NotAllowedException;
 import com.crud.base.demo.exceptions.ResourceAlreadyExists;

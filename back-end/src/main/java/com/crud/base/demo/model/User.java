@@ -15,7 +15,6 @@ import jakarta.validation.constraints.NotBlank;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 @Entity(name = "user_")
-@Table(name="user_")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

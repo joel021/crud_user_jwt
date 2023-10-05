@@ -2,17 +2,15 @@ package com.crud.base.demo.controller.address;
 
 
 import com.crud.base.demo.TestsUtils;
-import com.crud.base.demo.exceptions.NotAllowedException;
 import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
 import com.crud.base.demo.model.Address;
 import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
 import com.crud.base.demo.repository.UserRepository;
-import com.crud.base.demo.service.address.AddressService;
+import com.crud.base.demo.service.AddressService;
 import com.crud.base.demo.service.user.AuthService;
 import com.crud.base.demo.service.user.DeleteUserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
 import org.junit.After;
 import org.junit.Before;
@@ -23,7 +21,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.HashMap;
 import java.util.UUID;
