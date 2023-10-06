@@ -1,0 +1,44 @@
+type Student {
+    register: String
+    name: String
+    level: String
+    score: Float
+    email: String
+}
+
+input StudentInput {
+    register: String
+    name: String
+    level: String
+    score: Float
+    email: String
+}
+
+type User {
+    id: String
+    email: String
+    password: String
+    role: String
+    addresses: [Address]
+}
+
+type Address {
+    id: String
+    street: String
+    district: String
+    state: String
+    country: String
+    city: String
+    number: Int
+    cep: String
+    owner: User
+}
+
+
+type Query {
+    findStudentByRegister(register: String) : [Student]
+}
+
+type Mutation {
+    register(student: StudentInput) : Student
+}

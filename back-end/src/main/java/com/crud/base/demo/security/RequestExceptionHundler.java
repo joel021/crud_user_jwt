@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import com.crud.base.demo.exceptions.ControllerException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -45,8 +47,8 @@ public class RequestExceptionHundler extends ResponseEntityExceptionHandler {
     return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
   }
 
-  @ExceptionHandler(ResourceNotFoundException.class)
-  public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+  @ExceptionHandler(ControllerException.class)
+  public ResponseEntity<?> handleExceptions(ControllerException ex, WebRequest request) {
     Map<String, String> body = new HashMap<>();
 
     body.put("message", ex.getMessage());

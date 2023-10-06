@@ -10,11 +10,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import lombok.Data;
 
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 @Entity(name = "address")
+@Data
 public class Address {
 
     @Id
@@ -38,9 +41,9 @@ public class Address {
     private String city;
 
     @NotNull(message = "The number is required.")
-    private int number;
+    private Integer number;
 
-    @NotBlank(message = "CEP is required.")
+    @Pattern(regexp = "[0-9]{5}-[0-9]{3}", message = "Provide a valid CEP.")
     private String cep;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -75,70 +78,6 @@ public class Address {
         return 1;
     }
 
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    public void setDistrict(String district){
-        this.district = district;
-    }
-
-    public String getDistrict(){
-        return this.district;
-    }
-
     public static Address parseAddress(Map<String, Object> addressMap){
 
         String id = (String) addressMap.get("id");
@@ -151,11 +90,4 @@ public class Address {
         return mapper.convertValue(addressMap, Address.class);
     }
 
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
 }

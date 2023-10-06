@@ -61,7 +61,7 @@ public class SecurityConfig  {
                     authRequest -> authRequest
                     .requestMatchers("/users/delete/*")
                     .hasAuthority(Authority.WRITE_ALL)
-                    .requestMatchers("/status","/users/signup", "/users/signin", "/users/address")
+                    .requestMatchers("/status","/users/signup", "/users/signin")
                     .permitAll()
                     .anyRequest()
                     .authenticated()
