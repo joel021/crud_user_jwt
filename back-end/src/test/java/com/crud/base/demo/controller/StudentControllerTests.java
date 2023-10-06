@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashMap;
 import java.util.UUID;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,14 +46,18 @@ public class StudentControllerTests {
 
     @Before
     public void setup() throws ResourceAlreadyExists {
-        User userCreated = authService.signup(new User("userAuthdAddressSearch@gmail.com", "password", Role.USER));
+
+        User userCreated = new User("userAuthdAddressSearch@gmail.com", "password", Role.USER);
+        when(userRepository.save(userCreated)).thenReturn(new User(UUID.randomUUID(),"userAuthdAddressSearch@gmail.com", "password", Role.USER));
+
+        userCreated = authService.signup(userCreated);
         userCreated.setPassword("password");
         userAuth = authService.signin(userCreated);
         userAuth.put("id", userCreated.getId());
     }
 
     @After
-    public void afterEach() throws ResourceNotFoundException, NotAllowedException {
+    public void afterEach() {
         userRepository.deleteById((UUID) userAuth.get("id"));
     }
 
