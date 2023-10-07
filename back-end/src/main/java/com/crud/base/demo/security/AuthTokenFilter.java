@@ -3,7 +3,7 @@ package com.crud.base.demo.security;
 import java.io.IOException;
 import java.util.UUID;
 
-import com.crud.base.demo.service.user.SearchUserService;
+import com.crud.base.demo.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
   private JwtHundler jwtHundler;
 
   @Autowired
-  private SearchUserService searchUser;
+  private UserService userService;
 
   private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
@@ -35,7 +35,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
       String jwt = parseJwt(request);
       if (jwt != null && jwtHundler.validateJwtToken(jwt)) {
         final String userId = jwtHundler.getUserIdFromJwtToken(jwt);
-        final UserDetails userDetails = searchUser.findById(UUID.fromString(userId));
+        final UserDetails userDetails = userService.findById(UUID.fromString(userId));
 
         if (userDetails == null){
           response.setStatus(HttpServletResponse.SC_FORBIDDEN);

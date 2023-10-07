@@ -5,7 +5,7 @@ import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
 import com.crud.base.demo.repository.UserRepository;
-import com.crud.base.demo.service.user.AuthService;
+import com.crud.base.demo.service.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
 import org.junit.After;
@@ -36,14 +36,14 @@ public class SigninTests {
     private UserRepository userRepository;
 
     @Autowired
-    private AuthService authService;
+    private UserService userService;
 
     private User dreamSigninUser;
 
     @Before
     public void beforeAach() {
         try {
-            dreamSigninUser = authService.signup(new User("dreanSigninUser@gmail.com", "password", Role.USER));
+            dreamSigninUser = userService.signup(new User("dreanSigninUser@gmail.com", "password", Role.USER));
         }catch (ResourceAlreadyExists ignored){
             dreamSigninUser = userRepository.findByEmail("dreanSigninUser@gmail.com").get(0);
         }

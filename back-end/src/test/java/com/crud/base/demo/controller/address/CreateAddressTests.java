@@ -11,9 +11,7 @@ import com.crud.base.demo.model.User;
 import com.crud.base.demo.model.UserDTO;
 import com.crud.base.demo.repository.UserRepository;
 import com.crud.base.demo.service.address.AddressService;
-import com.crud.base.demo.service.user.AuthService;
-import com.crud.base.demo.service.user.CreateUserService;
-import com.crud.base.demo.service.user.DeleteUserService;
+import com.crud.base.demo.service.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
 import org.junit.After;
@@ -44,16 +42,11 @@ public class CreateAddressTests {
     private UserRepository userRepository;
 
     @Autowired
-    private AuthService authService;
+    private UserService userService;
     
     @Autowired
     private AddressService addressService;
 
-    @Autowired
-    private CreateUserService createUserService;
-
-    @Autowired
-    private DeleteUserService deleteUserService;
 
     private UserDTO testerUser;
     private HashMap<String, Object> authUser;
@@ -65,7 +58,7 @@ public class CreateAddressTests {
         addressAlreadyExists = new Address("country", "state", "city", "district", "street", 0, "44380-000");
 
         try {
-            User testerUser = authService.signup(new User("addressTesterUser@gmail.com", "password", Role.USER));
+            User testerUser = userService.signup(new User("addressTesterUser@gmail.com", "password", Role.USER));
             this.testerUser = new UserDTO(testerUser);
         } catch (ResourceAlreadyExists ignored) {
             User testerUser = userRepository.findByEmail("addressTesterUser@gmail.com").get(0);
@@ -74,7 +67,7 @@ public class CreateAddressTests {
 
         testerUser.setPassword("password");
 
-        authUser = authService.signin(testerUser);
+        authUser = userService.signin(testerUser);
         authUser.put("password", "password");
 
         addressAlreadyExists = addressService.create(testerUser.getId(), addressAlreadyExists);

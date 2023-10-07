@@ -10,8 +10,7 @@ import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
 import com.crud.base.demo.repository.UserRepository;
 import com.crud.base.demo.service.address.AddressService;
-import com.crud.base.demo.service.user.AuthService;
-import com.crud.base.demo.service.user.DeleteUserService;
+import com.crud.base.demo.service.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
 import org.junit.After;
@@ -42,13 +41,10 @@ public class UpdateAddressTests {
     private UserRepository userRepository;
 
     @Autowired
-    private AuthService authService;
+    private UserService userService;
 
     @Autowired
     private AddressService addressService;
-
-    @Autowired
-    private DeleteUserService deleteUserService;
 
     private HashMap<String, Object> userAuth;
 
@@ -57,9 +53,9 @@ public class UpdateAddressTests {
 
     @Before
     public void beforeAach() throws ResourceAlreadyExists, ResourceNotFoundException {
-        User userCreated = authService.signup(new User("userAuthdAddressSearch@gmail.com", "password", Role.USER));
+        User userCreated = userService.signup(new User("userAuthdAddressSearch@gmail.com", "password", Role.USER));
         userCreated.setPassword("password");
-        userAuth = authService.signin(userCreated);
+        userAuth = userService.signin(userCreated);
         userAuth.put("id", userCreated.getId());
 
         addressAlreadyExists = new Address("country45", "state45", "city45", "district", "street", 0, "44380-000");

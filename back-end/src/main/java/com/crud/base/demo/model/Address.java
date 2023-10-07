@@ -43,7 +43,7 @@ public class Address {
     @NotNull(message = "The number is required.")
     private Integer number;
 
-    @Pattern(regexp = "[0-9]{5}-[0-9]{3}", message = "Provide a valid CEP.")
+    @Pattern(regexp = "[0-9]{6}-[0-9]{3}", message = "Provide a valid CEP.")
     private String cep;
 
     @ManyToOne(fetch = FetchType.LAZY)
