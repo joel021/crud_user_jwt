@@ -1,5 +1,6 @@
 package com.crud.base.demo.service;
 
+import com.crud.base.demo.exceptions.ControllerException;
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
 import com.crud.base.demo.model.Level;
 import com.crud.base.demo.model.Student;
@@ -13,8 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -50,4 +54,15 @@ public class StudentServiceTests {
         Student userFound = studentService.findStudentByRegister(studentFirstYear.getRegister());
         assertEquals(userFound.getRegister(), studentFirstYear.getRegister(), "Test whether user is returned");
     }
+
+    @Test
+    public void findStudentByRegisterNotExistsTest() {
+
+        ControllerException exception = assertThrows(ResourceNotFoundException.class, () -> {
+            studentService.findStudentByRegister("notExistentRegister");
+        });
+
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus(), "Test whether the correct exception is raised.");
+    }
+
 }
