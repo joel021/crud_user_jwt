@@ -5,7 +5,7 @@ public class UserDTO extends User {
     private String token;
 
     public UserDTO(User user){
-        super(user.getId(), user.getEmail(), user.getPassword(), user.getRole());
+        super(user.getId(), user.getEmail(), user.getPassword(), user.getUserRole(), user.getAddresses());
     }
     public String getToken() {
         return token;

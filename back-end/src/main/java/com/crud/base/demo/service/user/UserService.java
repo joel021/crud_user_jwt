@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
+import com.crud.base.demo.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.crud.base.demo.exceptions.ResourceAlreadyExists;
-import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
 import com.crud.base.demo.repository.UserRepository;
 import com.crud.base.demo.security.JwtHundler;
@@ -46,7 +46,7 @@ public class UserService {
         credentials.put("email", userDetails.getEmail());
         credentials.put("id", userDetails.getId());
         credentials.put("token", jwt);
-        credentials.put("role", userDetails.getRole());
+        credentials.put("role", userDetails.getUserRole());
 
         return credentials;
     }
@@ -65,7 +65,8 @@ public class UserService {
                         user.getId(),
                         user.getEmail(),
                         bCryptPasswordEncoder.encode(user.getPassword()),
-                        Role.USER));
+                        UserRole.ROLE_USER,
+                        user.getAddresses()));
     }
 
 
@@ -114,7 +115,7 @@ public class UserService {
     public User updateRole(User user) throws ResourceNotFoundException {
 
         User userFound = findById(user.getId());
-        userFound.setRole(user.getRole());
+        userFound.setUserRole(user.getUserRole());
         return userRepository.save(userFound);
     }
 

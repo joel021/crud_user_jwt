@@ -3,8 +3,8 @@ package com.crud.base.demo.controller.user;
 
 import com.crud.base.demo.TestsUtils;
 import com.crud.base.demo.exceptions.ResourceAlreadyExists;
-import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
+import com.crud.base.demo.model.UserRole;
 import com.crud.base.demo.repository.UserRepository;
 import com.crud.base.demo.service.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,7 +41,7 @@ public class UserControllerUserTests {
 
     @BeforeEach
     public void beforeAach() throws ResourceAlreadyExists {
-        User userCreated = userService.signup(new User("userAuthdSearch@gmail.com", "password", Role.USER));
+        User userCreated = userService.signup(new User(null, "userAuthdSearch@gmail.com", "password", UserRole.ROLE_ADMIN, null));
         userCreated.setPassword("password");
         userAuth = userService.signin(userCreated);
     }

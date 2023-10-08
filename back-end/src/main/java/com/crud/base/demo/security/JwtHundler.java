@@ -2,7 +2,6 @@ package com.crud.base.demo.security;
 
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import com.crud.base.demo.model.User;

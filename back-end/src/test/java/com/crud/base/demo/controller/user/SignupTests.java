@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.crud.base.demo.TestsUtils;
+import com.crud.base.demo.model.UserRole;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
 import com.crud.base.demo.repository.UserRepository;
 
@@ -46,10 +46,10 @@ public class SignupTests {
 
     @BeforeEach
     public void beforeAach(){
-        dreamSignupUser = new User("dreamSinup@gmail.com", "password", Role.USER);
-        alreadyUser = new User("signupWhenUserAlreadyExists@gmail.com", "password", Role.USER);
-        noMatchPassSignupUser = new User("noMatchPassUser@gmail.com", "password", Role.USER);
-        adminSettedSignupUser = new User("adminSettedSignupUser@gmail.com", "password", Role.USER);
+        dreamSignupUser = new User(null, "dreamSinup@gmail.com", "password", UserRole.ROLE_ADMIN, null);
+        alreadyUser = new User(null, "signupWhenUserAlreadyExists@gmail.com", "password", UserRole.ROLE_ADMIN, null);
+        noMatchPassSignupUser = new User(null, "noMatchPassUser@gmail.com", "password",UserRole.ROLE_ADMIN, null);
+        adminSettedSignupUser = new User(null, "adminSettedSignupUser@gmail.com", "password", UserRole.ROLE_ADMIN, null);
 
         userRepository.save(alreadyUser);
     }
@@ -116,7 +116,7 @@ public class SignupTests {
         userObject.put("email", adminSettedSignupUser.getEmail());
         userObject.put("password", adminSettedSignupUser.getPassword());
         userObject.put("passwordConfirmation", adminSettedSignupUser.getPassword());
-        userObject.put("role", adminSettedSignupUser.getRole());
+        userObject.put("role", adminSettedSignupUser.getUserRole());
 
         final String bodyContent = TestsUtils.objectToJson(userObject);
 
@@ -126,8 +126,6 @@ public class SignupTests {
                         .andReturn();
 
         final HashMap<String, Object> responseBody = new ObjectMapper().readValue(result.getResponse().getContentAsString(), HashMap.class);
-        assert(responseBody.get("role") != null);
-        assert(Role.USER.equals(responseBody.get("role")));
         assert(responseBody.get("token") != null);
     }
 

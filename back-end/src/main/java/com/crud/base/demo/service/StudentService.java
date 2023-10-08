@@ -21,7 +21,7 @@ public class StudentService {
 
     public Student findStudentByRegister(String register) throws ResourceNotFoundException {
 
-        Optional<Student> optionalStudent = studentRepository.findById(register);
+        Optional<Student> optionalStudent = studentRepository.findByRegister(register);
 
         if (optionalStudent.isPresent()) {
             return optionalStudent.get();

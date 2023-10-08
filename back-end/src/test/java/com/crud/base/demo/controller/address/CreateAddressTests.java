@@ -6,9 +6,9 @@ import com.crud.base.demo.exceptions.NotAllowedException;
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
 import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.model.Address;
-import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
 import com.crud.base.demo.model.UserDTO;
+import com.crud.base.demo.model.UserRole;
 import com.crud.base.demo.repository.UserRepository;
 import com.crud.base.demo.service.address.AddressService;
 import com.crud.base.demo.service.user.UserService;
@@ -20,7 +20,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -56,7 +55,7 @@ public class CreateAddressTests {
         addressAlreadyExists = new Address("country", "state", "city", "district", "street", 0, "44380-000");
 
         try {
-            User testerUser = userService.signup(new User("addressTesterUser@gmail.com", "password", Role.USER));
+            User testerUser = userService.signup(new User(null, "addressTesterUser@gmail.com", "password", UserRole.ROLE_ADMIN, null));
             this.testerUser = new UserDTO(testerUser);
         } catch (ResourceAlreadyExists ignored) {
             User testerUser = userRepository.findByEmail("addressTesterUser@gmail.com").get(0);

@@ -2,8 +2,8 @@ package com.crud.base.demo.controller;
 
 import com.crud.base.demo.TestsUtils;
 import com.crud.base.demo.exceptions.ResourceAlreadyExists;
-import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
+import com.crud.base.demo.model.UserRole;
 import com.crud.base.demo.service.user.UserService;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.AfterEach;
@@ -33,7 +33,7 @@ public class StudentControllerTests {
     @BeforeEach
     public void setup() throws ResourceAlreadyExists {
 
-        adminUser = new User(UUID.randomUUID(), "Admin", "password", Role.ADMIN);
+        adminUser = new User(UUID.randomUUID(), "Admin@mail.com", "password", UserRole.ROLE_ADMIN, null);
         userService.signup(adminUser);
         token = userService.signin(adminUser).get("token").toString();
     }
@@ -52,4 +52,5 @@ public class StudentControllerTests {
                                 .header("authorization", "Bearer " + token))
                 .andExpect(status().isNotFound());
     }
+
 }

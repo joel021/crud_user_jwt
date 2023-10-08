@@ -5,8 +5,12 @@ import java.util.*;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.annotation.Nonnull;
@@ -18,42 +22,27 @@ import jakarta.validation.constraints.NotBlank;
 @Entity(name = "user_")
 @Table(name="user_")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id", updatable=false, unique=true, nullable=false)
     private UUID id;
 
-    @Nonnull
-    @NotBlank(message = "The email is required.")
+    @Email(message = "Provide a valid email.")
     private String email;
 
     @Nonnull
     @NotBlank(message = "Password is required")
     private String password;
 
-    private String role;
+    private UserRole userRole;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "owner")
-    private Set<Address> addresses;
+    private Set<Address> addresses = new HashSet<>();
 
-    public User(){
-        this.addresses = new HashSet<>();
-    }
-
-    public User(String email, String password, String role){
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.addresses = new HashSet<>();
-    }
-    public User(UUID id, String email, String password, String role){
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.addresses = new HashSet<>();
-    }
     @Override
     public boolean equals(Object object){
         if (object == null){
@@ -63,12 +52,16 @@ public class User implements UserDetails {
         return Objects.equals(this.email, user.email);
     }
 
-    public void removeAddress(Address address){
-        this.addresses.remove(address);
-    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Role.getGrandedAuthorities(this.role);
+
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for(UserRole ordinalRole: UserRole.values()) {
+            if (userRole.ordinal() >= ordinalRole.ordinal()){
+                authorities.add(new SimpleGrantedAuthority(ordinalRole.name()));
+            }
+        }
+        return authorities;
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.crud.base.demo.service;
 
 import com.crud.base.demo.exceptions.ControllerException;
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
-import com.crud.base.demo.model.Level;
+import com.crud.base.demo.model.CourseLevel;
 import com.crud.base.demo.model.Student;
 import com.crud.base.demo.repository.StudentRepository;
 
@@ -36,10 +36,9 @@ public class StudentServiceTests {
 
     @BeforeEach
     public void setup() {
-        studentFirstYear = new Student("register", "Student First Year", Level.FIRST_YEAR, 8.1f,
-                "student@email.com");
+        studentFirstYear = new Student("register", "Student First Year", CourseLevel.FIRST_YEAR, 8.1f);
         when(studentRepository.save(studentFirstYear)).thenReturn(studentFirstYear);
-        when(studentRepository.findById(studentFirstYear.getRegister())).thenReturn(Optional.of(studentFirstYear));
+        when(studentRepository.findByRegister(studentFirstYear.getRegister())).thenReturn(Optional.of(studentFirstYear));
     }
 
     @Test

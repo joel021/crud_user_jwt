@@ -5,8 +5,8 @@ import com.crud.base.demo.exceptions.NotAllowedException;
 import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
 import com.crud.base.demo.model.Address;
-import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
+import com.crud.base.demo.model.UserRole;
 import com.crud.base.demo.repository.UserRepository;
 import com.crud.base.demo.service.address.AddressService;
 import com.crud.base.demo.service.user.UserService;
@@ -50,7 +50,7 @@ public class UserControllerAddressControllerTests {
 
     @BeforeEach
     public void beforeAach() throws ResourceAlreadyExists, ResourceNotFoundException {
-        User userCreated = userService.signup(new User("userAuthdAddressSearch@gmail.com", "password", Role.USER));
+        User userCreated = userService.signup(new User(null, "userAuthdAddressSearch@gmail.com", "password", UserRole.ROLE_ADMIN, null));
         userCreated.setPassword("password");
         userAuth = userService.signin(userCreated);
         userAuth.put("id", userCreated.getId());
