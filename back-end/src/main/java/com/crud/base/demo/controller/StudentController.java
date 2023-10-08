@@ -2,7 +2,7 @@ package com.crud.base.demo.controller;
 
 import com.crud.base.demo.exceptions.ResourceNotFoundException;
 import com.crud.base.demo.model.Student;
-import com.crud.base.demo.service.student.StudentService;
+import com.crud.base.demo.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

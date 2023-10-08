@@ -24,7 +24,7 @@ import com.crud.base.demo.security.JwtHundler;
 public class UserService {
     
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     private JwtHundler jwtHundler;
@@ -37,11 +37,10 @@ public class UserService {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtHundler.generateJwtToken(authentication);
 
         User userDetails = (User) authentication.getPrincipal();
+        String jwt = jwtHundler.generateJwtToken(userDetails);
 
         HashMap<String, Object> credentials = new HashMap<>();
         credentials.put("email", userDetails.getEmail());
@@ -53,6 +52,7 @@ public class UserService {
     }
 
     public User signup(User user) throws ResourceAlreadyExists {
+
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         User userFound = findByEmail(user.getEmail());
@@ -82,7 +82,7 @@ public class UserService {
     public User findById(UUID id) throws ResourceNotFoundException {
         Optional<User> result = userRepository.findById(id);
         if(!result.isPresent()){
-            throw new ResourceNotFoundException("User with id = "+id+" do not exists.");
+            throw new ResourceNotFoundException("User with id = "+id+" does not exists.");
         }
 
         return result.get();

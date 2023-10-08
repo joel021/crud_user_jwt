@@ -18,7 +18,6 @@ import jakarta.validation.constraints.NotBlank;
 @Entity(name = "user_")
 @Table(name="user_")
 @Data
-
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

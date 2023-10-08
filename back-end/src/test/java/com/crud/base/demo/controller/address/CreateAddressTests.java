@@ -14,10 +14,9 @@ import com.crud.base.demo.service.address.AddressService;
 import com.crud.base.demo.service.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,7 +29,6 @@ import java.util.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CreateAddressTests {
@@ -53,7 +51,7 @@ public class CreateAddressTests {
 
     private Address addressToCreate, addressAlreadyExists;
 
-    @Before
+    @BeforeEach
     public void beforeAach() throws ResourceNotFoundException, ResourceAlreadyExists {
         addressAlreadyExists = new Address("country", "state", "city", "district", "street", 0, "44380-000");
 
@@ -75,7 +73,7 @@ public class CreateAddressTests {
         addressToCreate = new Address("country1", "state1", "city1", "district1", "street1", 1, "44380-000");
     }
 
-    @After
+    @AfterEach
     public void afterEach() throws ResourceNotFoundException, NotAllowedException {
 
         addressService.deleteById(testerUser.getId(), addressAlreadyExists.getId());

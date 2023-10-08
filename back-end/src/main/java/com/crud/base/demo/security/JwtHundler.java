@@ -18,10 +18,6 @@ public class JwtHundler {
   @Value("${jwtExpirationMs}")
   private int jwtExpirationMs;
 
-  public String generateJwtToken(Authentication authentication) {
-    User userPrincipal = (User) authentication.getPrincipal();
-    return this.generateJwtToken(userPrincipal);
-  }
 
   public String generateJwtToken(User user){
     return Jwts.builder()

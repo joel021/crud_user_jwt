@@ -4,67 +4,43 @@ import com.crud.base.demo.TestsUtils;
 import com.crud.base.demo.exceptions.ResourceAlreadyExists;
 import com.crud.base.demo.model.Role;
 import com.crud.base.demo.model.User;
-import com.crud.base.demo.repository.UserRepository;
 import com.crud.base.demo.service.user.UserService;
 import jakarta.inject.Inject;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.HashMap;
 import java.util.UUID;
-
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 @AutoConfigureMockMvc
+@SpringBootTest
 public class StudentControllerTests {
 
-
-    //https://stackoverflow.com/questions/15203485/spring-test-security-how-to-mock-authentication
     @Inject
     private MockMvc mockMvc;
-
     @Autowired
     private UserService userService;
-
-    @MockBean
-    AuthenticationManager authenticationManager;
-
-    @MockBean
-    private UserRepository userRepository;
-
-    private HashMap<String, Object> userAuth;
+    private User adminUser;
+    private String token;
 
 
-    @Before
+    @BeforeEach
     public void setup() throws ResourceAlreadyExists {
 
-        User userCreated = new User("userAuthdAddressSearch@gmail.com", "password", Role.USER);
-        when(userRepository.save(userCreated)).thenReturn(new User(UUID.randomUUID(),"userAuthdAddressSearch@gmail.com", "password", Role.USER));
-
-        when(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userCreated.getUsername(), userCreated.getPassword()))).thenReturn()
-        userCreated = userService.signup(userCreated);
-        userCreated.setPassword("password");
-        userAuth = userService.signin(userCreated);
-        userAuth.put("id", userCreated.getId());
+        adminUser = new User(UUID.randomUUID(), "Admin", "password", Role.ADMIN);
+        userService.signup(adminUser);
+        token = userService.signin(adminUser).get("token").toString();
     }
 
-    @After
+    @AfterEach
     public void afterEach() {
-        userRepository.deleteById((UUID) userAuth.get("id"));
+        userService.deleteUserByEmail(adminUser.getEmail());
     }
 
     @Test
@@ -73,7 +49,7 @@ public class StudentControllerTests {
         mockMvc.perform(
                         get("/student/000293")
                                 .contentType(TestsUtils.CONTENT_TYPE)
-                                .header("authorization", "Bearer " + userAuth.get("token")))
+                                .header("authorization", "Bearer " + token))
                 .andExpect(status().isNotFound());
     }
 }

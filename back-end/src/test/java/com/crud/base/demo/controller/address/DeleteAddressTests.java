@@ -11,14 +11,12 @@ import com.crud.base.demo.repository.UserRepository;
 import com.crud.base.demo.service.address.AddressService;
 import com.crud.base.demo.service.user.UserService;
 import jakarta.inject.Inject;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
@@ -27,7 +25,6 @@ import java.util.UUID;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class DeleteAddressTests {
@@ -49,7 +46,7 @@ public class DeleteAddressTests {
     private Address addressToBeDeleted;
 
 
-    @Before
+    @BeforeEach
     public void beforeAach() throws ResourceAlreadyExists, ResourceNotFoundException {
         User userCreated = userService.signup(new User("userAuthdAddressDelete@gmail.com", "password", Role.USER));
         userCreated.setPassword("password");
@@ -60,7 +57,7 @@ public class DeleteAddressTests {
         addressToBeDeleted = addressService.create(userCreated.getId(), addressToBeDeleted);
     }
 
-    @After
+    @AfterEach
     public void afterEach() {
         userRepository.deleteById((UUID) userAuth.get("id"));
     }
