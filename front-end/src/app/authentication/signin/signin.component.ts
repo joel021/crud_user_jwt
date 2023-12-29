@@ -6,8 +6,8 @@ import { catchError } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/_service/authentication.service';
 import { PageActionsComponent } from 'src/app/_components/page-actions/page-actions.component';
 import { throwError } from 'rxjs';
-import { User } from 'src/app/_model/user';
 import { HTTP_STATUS_UNAUTHORIZED } from 'src/app/_constants/http.constants';
+import { User } from 'src/app/store/models/user.model';
 
 @Component({
   selector: 'app-signin',

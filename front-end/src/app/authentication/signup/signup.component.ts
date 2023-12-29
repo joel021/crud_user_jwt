@@ -9,7 +9,7 @@ import { throwError } from 'rxjs';
 import { AuthenticationService } from 'src/app/_service/authentication.service';
 import { PageActionsComponent } from 'src/app/_components/page-actions/page-actions.component';
 import { CustomValidators } from 'src/app/_helpers/validators';
-import { User } from 'src/app/_model/user';
+import { User } from 'src/app/store/models/user.model';
 
 @Component({
   selector: 'sinup-component',
