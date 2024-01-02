@@ -1,35 +1,14 @@
-import { AddressAction, AddressActionEnum } from "../models/actions/address.action";
-import { Address } from "../models/address.model";
-
-const initialState: Array<Address> = [
-    {
-        id: "uuuiidddd",
-        street: "street",
-        district: "district",
-        state: "state",
-        country: "country",
-        city: "city",
-        number: 2,
-        cep: "cep",
-        owner: {
-            _id: "string",
-            email: "string",
-            password: "string",
-            token: "string",
-            authorities: ["APP_ADMIN"],
-            role: "APP_ADMIN",
-        }
-    }
-]
+import { addAddress } from "../actions/address.action";
+import { State } from "../state.model";
 
 export const addressReducer = (
-    state: Array<Address> = initialState,
-    action: AddressAction
-) => {
+    state: State = { addresses: [] },
+    action
+) : State => {
 
     switch(action.type) {
-        case AddressActionEnum.ADD_ADDRESS:
-            return [...state, action.payload];
+        case addAddress.type:
+            return {...state, addresses: [...state.addresses, action.address] };
         default:
             return state;
     }

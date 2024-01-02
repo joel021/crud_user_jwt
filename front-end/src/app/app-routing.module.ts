@@ -2,8 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Signin } from './authentication/signin/signin.component';
 import { Signup } from './authentication/signup/signup.component'
-import { CreateAddress } from './user-home/add-update-address/address.component';
+import { CreateAddress } from './user-home/add-update-address/add-update-address.component';
 import { UserHome } from './user-home/home/home.component';
+import { EntityDataModule } from '@ngrx/data';
+import { entityConfig } from './store/entity-metadata.component';
+import { ListAddressesComponent } from './user-home/list-addresses/list-addresses.component';
 
 const routes: Routes = [
   {
@@ -27,12 +30,18 @@ const routes: Routes = [
     component: CreateAddress
   },
   {
+    path: "address",
+    component: ListAddressesComponent
+  },
+  {
     path: "**", redirectTo: "signin"
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: "reload" })],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: "reload" }),
+     EntityDataModule.forRoot(entityConfig)
+    ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

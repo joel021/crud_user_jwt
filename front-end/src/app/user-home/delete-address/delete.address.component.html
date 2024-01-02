@@ -1,13 +1,6 @@
-<button
-  type="button"
-  class="btn btn-danger"
-  (click)="openPopup()">Delete
+<button type="button" class="btn btn-danger" (click)="openPopup()">Delete
 </button>
-<div
-  class="modal"
-  tabindex="-1"
-  role="dialog"
-  [ngStyle]="{'display':displayStyle}">
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -15,15 +8,13 @@
       </div>
       <div class="modal-body">
         <p>Are you sure?</p>
-  
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" 
-                (click)="confirm()">
+        <button type="button" class="btn btn-danger" (click)="confirm()">
           Confirm
         </button>
-        <button type="button" class="btn btn-link" 
-                (click)="cancel()">
+        <button type="button" class="btn btn-link" (click)="cancel()">
           Close
         </button>
       </div>

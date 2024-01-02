@@ -8,13 +8,13 @@ import { ToastrService } from 'ngx-toastr'
 })
 export class DeleteAddress implements OnInit {
 
-    @Input() id:string
+    @Input() id: string
     displayStyle = "none";
 
     constructor(
         private addressService: AddressService,
         private toastr: ToastrService
-    ) { 
+    ) {
         this.addressService = addressService
         this.toastr = toastr
     }
@@ -28,11 +28,13 @@ export class DeleteAddress implements OnInit {
     cancel() {
         this.displayStyle = "none";
     }
-    openPopup(){
+    openPopup() {
         this.displayStyle = "block";
     }
 
-    deleteAddress(id:string){
+    deleteAddress(id: string) {
+
+        /*
         this.addressService.deleteById(id).subscribe({
         next: resp => {
             window.location.reload()
@@ -42,5 +44,6 @@ export class DeleteAddress implements OnInit {
             this.toastr.success('Was not deleted. \n'+resp.message, 'Error');
         }
         })
+        */
     }
 }

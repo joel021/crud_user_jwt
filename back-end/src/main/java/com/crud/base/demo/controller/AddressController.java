@@ -14,15 +14,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("users/address")
+@RequestMapping("/address")
 public class AddressController {
 
     @Autowired
     private AddressService addressService;
+
+    @GetMapping("/")
+    public ResponseEntity<List<Address>> findAll() {
+
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(addressService.findByOwner(user));
+    }
 
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody @Valid Address address) {
@@ -33,7 +41,7 @@ public class AddressController {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(addressService.create(user.getId(), address));
-        }catch (ResourceAlreadyExists | ResourceNotFoundException err){
+        } catch (ResourceAlreadyExists | ResourceNotFoundException err){
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .body(err.getMessage());
